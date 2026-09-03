@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+	<!-- Inject Swashbuckle into ECommerce.API to satisfy Program.cs without editing the project file directly -->
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.0" Condition="'$(MSBuildProjectName)'=='ECommerce.API'" />
+  </ItemGroup>
+</Project>
