@@ -1,0 +1,329 @@
+Folder PATH listing for volume OS
+Volume serial number is ACEB-2CA6
+C:\USERS\MAKHILSAI\SOURCE\REPOS\ECOMMERCE\ECOMMERCE.UNITTESTS
+|   ECommerce.UnitTests.csproj
+|   
++---BackgroundJobs
+|       LowStockBackgroundServiceTests.cs
+|       
++---bin
+|   +---Debug
+|   |   \---net10.0
+|   |       |   .msCoverageSourceRootsMapping_ECommerce.UnitTests
+|   |       |   appsettings.json
+|   |       |   Azure.Core.dll
+|   |       |   Azure.Identity.dll
+|   |       |   Castle.Core.dll
+|   |       |   ECommerce.API.deps.json
+|   |       |   ECommerce.API.dll
+|   |       |   ECommerce.API.exe
+|   |       |   ECommerce.API.pdb
+|   |       |   ECommerce.API.runtimeconfig.json
+|   |       |   ECommerce.API.staticwebassets.endpoints.json
+|   |       |   ECommerce.API.staticwebassets.runtime.json
+|   |       |   ECommerce.Application.dll
+|   |       |   ECommerce.Application.pdb
+|   |       |   ECommerce.Domain.dll
+|   |       |   ECommerce.Domain.pdb
+|   |       |   ECommerce.Infrastructure.dll
+|   |       |   ECommerce.Infrastructure.pdb
+|   |       |   ECommerce.UnitTests.deps.json
+|   |       |   ECommerce.UnitTests.dll
+|   |       |   ECommerce.UnitTests.pdb
+|   |       |   ECommerce.UnitTests.runtimeconfig.json
+|   |       |   ExcelDataReader.DataSet.dll
+|   |       |   ExcelDataReader.dll
+|   |       |   Humanizer.dll
+|   |       |   Microsoft.AspNetCore.Authentication.JwtBearer.dll
+|   |       |   Microsoft.Bcl.AsyncInterfaces.dll
+|   |       |   Microsoft.CodeAnalysis.CSharp.dll
+|   |       |   Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+|   |       |   Microsoft.CodeAnalysis.dll
+|   |       |   Microsoft.CodeAnalysis.Workspaces.dll
+|   |       |   Microsoft.Data.SqlClient.dll
+|   |       |   Microsoft.EntityFrameworkCore.Abstractions.dll
+|   |       |   Microsoft.EntityFrameworkCore.Design.dll
+|   |       |   Microsoft.EntityFrameworkCore.dll
+|   |       |   Microsoft.EntityFrameworkCore.Relational.dll
+|   |       |   Microsoft.EntityFrameworkCore.SqlServer.dll
+|   |       |   Microsoft.Extensions.DependencyModel.dll
+|   |       |   Microsoft.Identity.Client.dll
+|   |       |   Microsoft.Identity.Client.Extensions.Msal.dll
+|   |       |   Microsoft.IdentityModel.Abstractions.dll
+|   |       |   Microsoft.IdentityModel.JsonWebTokens.dll
+|   |       |   Microsoft.IdentityModel.Logging.dll
+|   |       |   Microsoft.IdentityModel.Protocols.dll
+|   |       |   Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+|   |       |   Microsoft.IdentityModel.Tokens.dll
+|   |       |   Microsoft.OpenApi.dll
+|   |       |   Microsoft.SqlServer.Server.dll
+|   |       |   Microsoft.TestPlatform.CommunicationUtilities.dll
+|   |       |   Microsoft.TestPlatform.CoreUtilities.dll
+|   |       |   Microsoft.TestPlatform.CrossPlatEngine.dll
+|   |       |   Microsoft.TestPlatform.PlatformAbstractions.dll
+|   |       |   Microsoft.TestPlatform.Utilities.dll
+|   |       |   Microsoft.VisualStudio.CodeCoverage.Shim.dll
+|   |       |   Microsoft.VisualStudio.TestPlatform.Common.dll
+|   |       |   Microsoft.VisualStudio.TestPlatform.ObjectModel.dll
+|   |       |   Microsoft.Win32.SystemEvents.dll
+|   |       |   Mono.TextTemplating.dll
+|   |       |   Moq.dll
+|   |       |   Swashbuckle.AspNetCore.Swagger.dll
+|   |       |   Swashbuckle.AspNetCore.SwaggerGen.dll
+|   |       |   Swashbuckle.AspNetCore.SwaggerUI.dll
+|   |       |   System.CodeDom.dll
+|   |       |   System.Composition.AttributedModel.dll
+|   |       |   System.Composition.Convention.dll
+|   |       |   System.Composition.Hosting.dll
+|   |       |   System.Composition.Runtime.dll
+|   |       |   System.Composition.TypedParts.dll
+|   |       |   System.Configuration.ConfigurationManager.dll
+|   |       |   System.Drawing.Common.dll
+|   |       |   System.IdentityModel.Tokens.Jwt.dll
+|   |       |   System.Memory.Data.dll
+|   |       |   System.Runtime.Caching.dll
+|   |       |   System.Security.Cryptography.ProtectedData.dll
+|   |       |   System.Security.Permissions.dll
+|   |       |   System.Windows.Extensions.dll
+|   |       |   testhost.dll
+|   |       |   testhost.exe
+|   |       |   xunit.abstractions.dll
+|   |       |   xunit.assert.dll
+|   |       |   xunit.core.dll
+|   |       |   xunit.execution.dotnet.dll
+|   |       |   xunit.runner.reporters.netcoreapp10.dll
+|   |       |   xunit.runner.utility.netcoreapp10.dll
+|   |       |   xunit.runner.visualstudio.dotnetcore.testadapter.dll
+|   |       |   
+|   |       +---cs
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---de
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---es
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---fr
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---it
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---ja
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---ko
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---pl
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---pt-BR
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---ru
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---runtimes
+|   |       |   +---unix
+|   |       |   |   \---lib
+|   |       |   |       \---net6.0
+|   |       |   |               Microsoft.Data.SqlClient.dll
+|   |       |   |               System.Drawing.Common.dll
+|   |       |   |               
+|   |       |   +---win
+|   |       |   |   \---lib
+|   |       |   |       \---net6.0
+|   |       |   |               Microsoft.Data.SqlClient.dll
+|   |       |   |               Microsoft.Win32.SystemEvents.dll
+|   |       |   |               System.Drawing.Common.dll
+|   |       |   |               System.Runtime.Caching.dll
+|   |       |   |               System.Security.Cryptography.ProtectedData.dll
+|   |       |   |               System.Windows.Extensions.dll
+|   |       |   |               
+|   |       |   +---win-arm
+|   |       |   |   \---native
+|   |       |   |           Microsoft.Data.SqlClient.SNI.dll
+|   |       |   |           
+|   |       |   +---win-arm64
+|   |       |   |   \---native
+|   |       |   |           Microsoft.Data.SqlClient.SNI.dll
+|   |       |   |           
+|   |       |   +---win-x64
+|   |       |   |   \---native
+|   |       |   |           Microsoft.Data.SqlClient.SNI.dll
+|   |       |   |           
+|   |       |   \---win-x86
+|   |       |       \---native
+|   |       |               Microsoft.Data.SqlClient.SNI.dll
+|   |       |               
+|   |       +---tr
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       +---zh-Hans
+|   |       |       Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |       |       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |       |       Microsoft.CodeAnalysis.resources.dll
+|   |       |       Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |       |       Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |       |       Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |       |       Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |       |       
+|   |       \---zh-Hant
+|   |               Microsoft.CodeAnalysis.CSharp.resources.dll
+|   |               Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|   |               Microsoft.CodeAnalysis.resources.dll
+|   |               Microsoft.CodeAnalysis.Workspaces.resources.dll
+|   |               Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+|   |               Microsoft.TestPlatform.CoreUtilities.resources.dll
+|   |               Microsoft.TestPlatform.CrossPlatEngine.resources.dll
+|   |               Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+|   |               Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
+|   |               
+|   \---Release
+|       \---net10.0
+|               .msCoverageSourceRootsMapping_ECommerce.UnitTests
+|               
++---obj
+|   |   ECommerce.UnitTests.csproj.nuget.dgspec.json
+|   |   ECommerce.UnitTests.csproj.nuget.g.props
+|   |   ECommerce.UnitTests.csproj.nuget.g.targets
+|   |   project.assets.json
+|   |   project.nuget.cache
+|   |   
+|   +---Debug
+|   |   \---net10.0
+|   |       |   .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
+|   |       |   ECommerc.B29FD574.Up2Date
+|   |       |   ECommerce.UnitTests.AssemblyInfo.cs
+|   |       |   ECommerce.UnitTests.AssemblyInfoInputs.cache
+|   |       |   ECommerce.UnitTests.assets.cache
+|   |       |   ECommerce.UnitTests.csproj.AssemblyReference.cache
+|   |       |   ECommerce.UnitTests.csproj.CoreCompileInputs.cache
+|   |       |   ECommerce.UnitTests.csproj.FileListAbsolute.txt
+|   |       |   ECommerce.UnitTests.dll
+|   |       |   ECommerce.UnitTests.GeneratedMSBuildEditorConfig.editorconfig
+|   |       |   ECommerce.UnitTests.genruntimeconfig.cache
+|   |       |   ECommerce.UnitTests.pdb
+|   |       |   ECommerce.UnitTests.sourcelink.json
+|   |       |   
+|   |       +---ref
+|   |       |       ECommerce.UnitTests.dll
+|   |       |       
+|   |       \---refint
+|   |               ECommerce.UnitTests.dll
+|   |               
+|   \---Release
+|       \---net10.0
+|           |   .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
+|           |   ECommerce.UnitTests.AssemblyInfo.cs
+|           |   ECommerce.UnitTests.AssemblyInfoInputs.cache
+|           |   ECommerce.UnitTests.assets.cache
+|           |   ECommerce.UnitTests.csproj.AssemblyReference.cache
+|           |   ECommerce.UnitTests.GeneratedMSBuildEditorConfig.editorconfig
+|           |   
+|           +---ref
+|           \---refint
++---Repositories
+|       .gitkeep
+|       
++---Services
+|       .gitkeep
+|       BasicServiceTests.cs
+|       OrderNotificationServiceTests.cs
+|       SampleTests.cs
+|       
+\---Validators
+        .gitkeep
+        

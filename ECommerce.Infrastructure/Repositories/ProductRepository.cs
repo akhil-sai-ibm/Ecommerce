@@ -16,19 +16,29 @@ namespace ECommerce.Infrastructure.Repositories
         {
         }
 
+        public override async Task<Product?> GetByIdAsync(Guid id, System.Threading.CancellationToken cancellationToken = default)
+        {
+            return await _dbSet.Include(p => p.Inventory).FirstOrDefaultAsync(e => e.Id == id, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<IEnumerable<Product>> GetAllAsync(System.Threading.CancellationToken cancellationToken = default)
+        {
+            return await _dbSet.Include(p => p.Inventory).AsNoTracking().ToListAsync(cancellationToken).ConfigureAwait(false);
+        }
+
         public async Task<Product?> GetBySkuAsync(string sku)
         {
-            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(p => p.SKU == sku).ConfigureAwait(false);
+            return await _dbSet.Include(p => p.Inventory).AsNoTracking().FirstOrDefaultAsync(p => p.SKU == sku).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Product>> GetByCategoryAsync(Guid categoryId)
         {
-            return await _dbSet.Where(p => p.CategoryId == categoryId).AsNoTracking().ToListAsync().ConfigureAwait(false);
+            return await _dbSet.Include(p => p.Inventory).Where(p => p.CategoryId == categoryId).AsNoTracking().ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task<(IEnumerable<Product> Items, int TotalCount)> SearchAsync(string? searchTerm, Guid? categoryId, int pageNumber, int pageSize, string? sortBy, string? sortDirection)
+        public async Task<(IEnumerable<Product> Items, int TotalCount)> SearchAsync(string? searchTerm, Guid? categoryId, int pageNumber, int pageSize, string? sortBy, string? sortDirection, ProductStatus? status = null)
         {
-            var query = _dbSet.AsQueryable();
+            var query = _dbSet.Include(p => p.Inventory).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -39,6 +49,11 @@ namespace ECommerce.Infrastructure.Repositories
             if (categoryId.HasValue)
             {
                 query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            if (status.HasValue)
+            {
+                query = query.Where(p => p.Status == status.Value);
             }
 
             var total = await query.CountAsync().ConfigureAwait(false);
@@ -78,7 +93,7 @@ namespace ECommerce.Infrastructure.Repositories
 
         public async Task<IEnumerable<Product>> GetActiveProductsAsync()
         {
-            return await _dbSet.Where(p => p.Status == ProductStatus.Active).AsNoTracking().ToListAsync().ConfigureAwait(false);
+            return await _dbSet.Include(p => p.Inventory).Where(p => p.Status == ProductStatus.Active).AsNoTracking().ToListAsync().ConfigureAwait(false);
         }
     }
 }

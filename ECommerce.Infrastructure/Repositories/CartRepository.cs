@@ -28,5 +28,14 @@ namespace ECommerce.Infrastructure.Repositories
                 .ThenInclude(ci => ci.Product)
                 .FirstOrDefaultAsync(c => c.Id == cartId).ConfigureAwait(false);
         }
+
+        public async Task RemoveCartItemsByProductIdAsync(Guid productId)
+        {
+            var cartItems = await _context.Set<CartItem>().Where(ci => ci.ProductId == productId).ToListAsync().ConfigureAwait(false);
+            if (cartItems.Any())
+            {
+                _context.Set<CartItem>().RemoveRange(cartItems);
+            }
+        }
     }
 }

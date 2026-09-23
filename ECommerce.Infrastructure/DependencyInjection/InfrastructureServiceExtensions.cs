@@ -8,7 +8,7 @@ using ECommerce.Application.Interfaces.Services;
 using ECommerce.Infrastructure.Repositories;
 using ECommerce.Infrastructure.Authentication;
 using ECommerce.Infrastructure.Caching;
-using ECommerce.Infrastructure.Notifications;
+
 
 namespace ECommerce.Infrastructure.DependencyInjection
 {
@@ -37,6 +37,7 @@ namespace ECommerce.Infrastructure.DependencyInjection
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IIdempotencyRepository, IdempotencyRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
 
             // Authentication services
             services.AddScoped<IPasswordHasher, AspNetCorePasswordHasher>();
@@ -46,8 +47,10 @@ namespace ECommerce.Infrastructure.DependencyInjection
             services.AddMemoryCache();
             services.AddScoped<ICacheService, CacheService>();
 
-            // Notifications
-            services.AddScoped<IOrderNotificationService, OrderNotificationService>();
+            // File Storage
+            services.AddScoped<IFileStorageService, ECommerce.Infrastructure.Services.LocalFileStorageService>();
+
+            // Notifications handled in API layer
 
             return services;
         }

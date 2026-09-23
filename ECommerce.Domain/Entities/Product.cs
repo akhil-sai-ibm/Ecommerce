@@ -14,6 +14,8 @@ namespace ECommerce.Domain.Entities
 
         public string SKU { get; set; } = string.Empty;
 
+        public string? ImageUrl { get; set; }
+
         public ProductStatus Status { get; set; } = ProductStatus.Active;
 
         public Guid CategoryId { get; set; }

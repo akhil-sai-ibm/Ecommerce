@@ -47,5 +47,10 @@ namespace ECommerce.Infrastructure.Repositories
         {
             return await _dbSet.Where(o => o.Status == status).AsNoTracking().ToListAsync().ConfigureAwait(false);
         }
+
+        public async Task<bool> HasOrderItemsAsync(Guid productId)
+        {
+            return await _context.Set<OrderItem>().AnyAsync(oi => oi.ProductId == productId).ConfigureAwait(false);
+        }
     }
 }

@@ -289,6 +289,40 @@ namespace ECommerce.Infrastructure.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ShippingAddressLine1")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ShippingAddressLine2")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ShippingCity")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ShippingCountry")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ShippingPhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ShippingPostalCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ShippingState")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -393,6 +427,10 @@ namespace ECommerce.Infrastructure.Data.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -449,13 +487,13 @@ namespace ECommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedAt = new DateTime(2026, 9, 3, 16, 25, 26, 679, DateTimeKind.Utc).AddTicks(5302),
+                            CreatedAt = new DateTime(2026, 9, 22, 18, 25, 50, 759, DateTimeKind.Utc).AddTicks(4417),
                             Name = "Customer"
                         },
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedAt = new DateTime(2026, 9, 3, 16, 25, 26, 679, DateTimeKind.Utc).AddTicks(5305),
+                            CreatedAt = new DateTime(2026, 9, 22, 18, 25, 50, 759, DateTimeKind.Utc).AddTicks(4420),
                             Name = "Admin"
                         });
                 });
@@ -485,6 +523,12 @@ namespace ECommerce.Infrastructure.Data.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RoleId")

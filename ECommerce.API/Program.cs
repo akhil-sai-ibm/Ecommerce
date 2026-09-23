@@ -20,6 +20,21 @@ builder.Services.AddEndpointsApiExplorer();
 // SignalR
 builder.Services.AddSignalR();
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactApp", policy =>
+    {
+        policy.WithOrigins(
+"http://localhost:5173",
+    "http://localhost:5174"
+)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 // Swagger
 builder.Services.AddSwaggerGen(c =>
 {
@@ -54,14 +69,15 @@ builder.Services.AddSwaggerGen(c =>
 
 // Infrastructure and Application services
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.Configure<ECommerce.Application.Configuration.BulkProductOptions>(builder.Configuration.GetSection("BulkProduct"));
 builder.Services.AddApplicationServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IOrderNotificationService, OrderNotificationService>();
 
 // Background services
 // NOTE: LowStockBackgroundService is fully implemented in ECommerce.Infrastructure.BackgroundJobs
-// Uncomment below to enable background monitoring of low-stock inventory
-// builder.Services.AddHostedService<ECommerce.Infrastructure.BackgroundJobs.LowStockBackgroundService>();
+builder.Services.AddHostedService<ECommerce.Infrastructure.BackgroundJobs.LowStockBackgroundService>();
 
 // JWT Authentication
 var jwtSection = builder.Configuration.GetSection("JwtSettings");
@@ -88,6 +104,19 @@ if (!string.IsNullOrEmpty(secret))
             ValidAudience = jwtSection.GetValue<string>("Audience"),
             IssuerSigningKey = new SymmetricSecurityKey(key)
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/orders"))
+                {
+                    context.Token = accessToken;
+                }
+                return System.Threading.Tasks.Task.CompletedTask;
+            }
+        };
     });
 
     builder.Services.AddAuthorization();
@@ -95,8 +124,6 @@ if (!string.IsNullOrEmpty(secret))
 
 var app = builder.Build();
 
-// Global exception handling
-app.UseExceptionHandling();
 
 if (app.Environment.IsDevelopment())
 {
@@ -105,9 +132,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ECommerce API v1"));
 }
 
+// Global exception handling
+app.UseExceptionHandling();
+
 app.UseHttpsRedirection();
 
+app.UseStaticFiles(); // Added to serve uploaded images
+
 app.UseRouting();
+
+app.UseCors("ReactApp");
 
 app.UseAuthentication();
 

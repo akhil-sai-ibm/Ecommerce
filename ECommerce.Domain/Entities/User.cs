@@ -14,6 +14,10 @@ namespace ECommerce.Domain.Entities
         // Do not store plaintext passwords
         public string PasswordHash { get; set; } = string.Empty;
 
+        public string? ProfileImageUrl { get; set; }
+
+        public string? PhoneNumber { get; set; }
+
         public Guid RoleId { get; set; }
 
         public Role? Role { get; set; }

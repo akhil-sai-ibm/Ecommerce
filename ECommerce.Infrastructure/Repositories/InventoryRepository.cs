@@ -17,7 +17,7 @@ namespace ECommerce.Infrastructure.Repositories
 
         public async Task<Inventory?> GetByProductIdAsync(Guid productId)
         {
-            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(i => i.ProductId == productId).ConfigureAwait(false);
+            return await _dbSet.FirstOrDefaultAsync(i => i.ProductId == productId).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Inventory>> GetLowStockItemsAsync()

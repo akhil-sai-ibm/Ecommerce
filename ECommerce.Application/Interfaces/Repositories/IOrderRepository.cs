@@ -15,5 +15,7 @@ namespace ECommerce.Application.Interfaces.Repositories
         Task<IEnumerable<Order>> GetAllWithDetailsAsync();
 
         Task<IEnumerable<Order>> GetByStatusAsync(OrderStatus status);
+
+        Task<bool> HasOrderItemsAsync(Guid productId);
     }
 }

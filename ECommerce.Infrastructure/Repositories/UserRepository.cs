@@ -4,6 +4,7 @@ using ECommerce.Application.Interfaces.Repositories;
 using ECommerce.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using ECommerce.Infrastructure.Data;
+using System.Linq;
 
 namespace ECommerce.Infrastructure.Repositories
 {
@@ -25,6 +26,13 @@ namespace ECommerce.Infrastructure.Repositories
                 .FirstOrDefaultAsync(u => u.Id == userId).ConfigureAwait(false);
         }
 
+        public async Task<User?> GetWithRoleAsync(Guid userId)
+        {
+            return await _dbSet.Include(u => u.Role)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == userId).ConfigureAwait(false);
+        }
+
         public async Task<User?> GetWithCartAsync(Guid userId)
         {
             return await _dbSet.Include(u => u.Cart)
@@ -32,6 +40,15 @@ namespace ECommerce.Infrastructure.Repositories
                 .ThenInclude(ci => ci.Product)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == userId).ConfigureAwait(false);
+        }
+
+        public async Task<System.Collections.Generic.IEnumerable<User>> GetUsersInRoleAsync(string roleName)
+        {
+            return await _dbSet.Include(u => u.Role)
+                               .Where(u => u.Role != null && u.Role.Name == roleName)
+                               .AsNoTracking()
+                               .ToListAsync()
+                               .ConfigureAwait(false);
         }
     }
 }

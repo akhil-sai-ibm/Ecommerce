@@ -14,6 +14,14 @@ namespace ECommerce.Infrastructure.Data.Configurations
             builder.Property(o => o.Status).IsRequired();
             builder.Property(o => o.TotalAmount).IsRequired().HasColumnType("decimal(18,2)");
 
+            builder.Property(o => o.ShippingAddressLine1).IsRequired().HasMaxLength(200);
+            builder.Property(o => o.ShippingAddressLine2).IsRequired(false).HasMaxLength(200);
+            builder.Property(o => o.ShippingCity).IsRequired().HasMaxLength(100);
+            builder.Property(o => o.ShippingState).IsRequired().HasMaxLength(100);
+            builder.Property(o => o.ShippingPostalCode).IsRequired().HasMaxLength(50);
+            builder.Property(o => o.ShippingCountry).IsRequired().HasMaxLength(100);
+            builder.Property(o => o.ShippingPhoneNumber).IsRequired().HasMaxLength(50);
+
             builder.Property(o => o.CreatedAt).IsRequired().HasColumnType("datetime2");
             builder.Property(o => o.UpdatedAt).IsRequired(false).HasColumnType("datetime2");
 

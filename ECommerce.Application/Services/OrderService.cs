@@ -62,8 +62,10 @@ namespace ECommerce.Application.Services
             return orders.Select(Map);
         }
 
-        public async Task<OrderDto> CreateOrderFromCartAsync(Guid userId, string? idempotencyKey = null)
+        public async Task<OrderDto> CreateOrderFromCartAsync(Guid userId, CheckoutRequestDto request, string? idempotencyKey = null)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
             // Validate idempotency key format (if provided)
             if (!string.IsNullOrWhiteSpace(idempotencyKey))
             {
@@ -182,6 +184,13 @@ namespace ECommerce.Application.Services
                     UserId = userId,
                     Status = OrderStatus.Pending,
                     TotalAmount = total,
+                    ShippingAddressLine1 = request.ShippingAddressLine1.Trim(),
+                    ShippingAddressLine2 = request.ShippingAddressLine2?.Trim(),
+                    ShippingCity = request.ShippingCity.Trim(),
+                    ShippingState = request.ShippingState.Trim(),
+                    ShippingPostalCode = request.ShippingPostalCode.Trim(),
+                    ShippingCountry = request.ShippingCountry.Trim(),
+                    ShippingPhoneNumber = request.ShippingPhoneNumber.Trim(),
                     CreatedAt = DateTime.UtcNow,
                     Items = orderItems
                 };
@@ -415,8 +424,8 @@ namespace ECommerce.Application.Services
             // Cannot transition from/to the same status
             if (from == to) return false;
 
-            // Cannot transition from Cancelled, Shipped, or Delivered to other states (except same)
-            if (from == OrderStatus.Cancelled || from == OrderStatus.Shipped || from == OrderStatus.Delivered)
+            // Cannot transition from Cancelled or Delivered to other states (except same)
+            if (from == OrderStatus.Cancelled || from == OrderStatus.Delivered)
             {
                 return false;
             }
@@ -438,6 +447,14 @@ namespace ECommerce.Application.Services
                 UserId = o.UserId,
                 Status = o.Status,
                 TotalAmount = o.TotalAmount,
+                OrderDate = o.CreatedAt,
+                ShippingAddressLine1 = o.ShippingAddressLine1,
+                ShippingAddressLine2 = o.ShippingAddressLine2,
+                ShippingCity = o.ShippingCity,
+                ShippingState = o.ShippingState,
+                ShippingPostalCode = o.ShippingPostalCode,
+                ShippingCountry = o.ShippingCountry,
+                ShippingPhoneNumber = o.ShippingPhoneNumber,
                 Items = o.Items?.Select(i => new OrderItemDto { Id = i.Id, ProductId = i.ProductId, Quantity = i.Quantity, UnitPrice = i.UnitPrice }).ToList() ?? new List<OrderItemDto>(),
                 PaymentId = o.Payment?.Id
             };

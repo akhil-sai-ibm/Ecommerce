@@ -5,10 +5,13 @@ using Microsoft.Extensions.Logging;
 
 namespace ECommerce.API.Hubs
 {
+    using Microsoft.AspNetCore.Authorization;
+
     /// <summary>
     /// SignalR hub for real-time order notifications.
     /// Customers connect to receive updates about their orders.
     /// </summary>
+    [Authorize]
     public class OrderNotificationHub : Hub
     {
         private readonly ILogger<OrderNotificationHub> _logger;

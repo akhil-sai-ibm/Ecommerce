@@ -1,0 +1,174 @@
+Folder PATH listing for volume OS
+Volume serial number is ACEB-2CA6
+C:\USERS\MAKHILSAI\SOURCE\REPOS\ECOMMERCE\ECOMMERCE.APPLICATION
+|   ApplicationPlaceholders.cs
+|   ApplicationServiceExtensions.cs
+|   ECommerce.Application.csproj
+|   
++---bin
+|   +---Debug
+|   |   \---net10.0
+|   |           ECommerce.Application.deps.json
+|   |           ECommerce.Application.dll
+|   |           ECommerce.Application.pdb
+|   |           ECommerce.Domain.dll
+|   |           ECommerce.Domain.pdb
+|   |           
+|   \---Release
+|       \---net10.0
++---Configuration
+|       BulkProductOptions.cs
+|       
++---DTOs
+|   |   .gitkeep
+|   |   
+|   +---Auth
+|   |       .gitkeep
+|   |       AuthResponse.cs
+|   |       LoginRequest.cs
+|   |       RegisterRequest.cs
+|   |       UserResponse.cs
+|   |       
+|   +---Cart
+|   |       .gitkeep
+|   |       AddCartItemDto.cs
+|   |       CartDto.cs
+|   |       CartItemDto.cs
+|   |       UpdateCartItemDto.cs
+|   |       
+|   +---Categories
+|   |       CategoryDto.cs
+|   |       CreateCategoryDto.cs
+|   |       UpdateCategoryDto.cs
+|   |       
+|   +---Common
+|   |       FileData.cs
+|   |       
+|   +---Inventory
+|   |       .gitkeep
+|   |       CreateInventoryDto.cs
+|   |       InventoryDto.cs
+|   |       UpdateInventoryDto.cs
+|   |       
+|   +---Orders
+|   |       .gitkeep
+|   |       CheckoutRequestDto.cs
+|   |       OrderDto.cs
+|   |       OrderItemDto.cs
+|   |       OrderNotificationDto.cs
+|   |       
+|   +---Payments
+|   |       .gitkeep
+|   |       CreatePaymentDto.cs
+|   |       PaymentDto.cs
+|   |       
+|   +---Products
+|   |       .gitkeep
+|   |       BulkProductErrorDto.cs
+|   |       BulkProductUploadResultDto.cs
+|   |       CreateProductDto.cs
+|   |       ProductDeleteResultDto.cs
+|   |       ProductDto.cs
+|   |       UpdateProductDto.cs
+|   |       
+|   \---Users
+|           RegisterUserDto.cs
+|           UpdateUserDto.cs
+|           UpdateUserProfileDto.cs
+|           UserDto.cs
+|           UserProfileDto.cs
+|           
++---Interfaces
+|   |   .gitkeep
+|   |   
+|   +---Repositories
+|   |       .gitkeep
+|   |       ICartRepository.cs
+|   |       ICategoryRepository.cs
+|   |       IGenericRepository.cs
+|   |       IIdempotencyRepository.cs
+|   |       IInventoryRepository.cs
+|   |       INotificationRepository.cs
+|   |       IOrderRepository.cs
+|   |       IPaymentRepository.cs
+|   |       IProductRepository.cs
+|   |       IUnitOfWork.cs
+|   |       IUserRepository.cs
+|   |       
+|   \---Services
+|           .gitkeep
+|           IAuthService.cs
+|           ICacheService.cs
+|           ICartService.cs
+|           ICategoryService.cs
+|           ICurrentUserService.cs
+|           IFileStorageService.cs
+|           IInventoryService.cs
+|           IOrderNotificationService.cs
+|           IOrderService.cs
+|           IPasswordHasher.cs
+|           IPaymentService.cs
+|           IProductService.cs
+|           ITokenService.cs
+|           IUserService.cs
+|           
++---obj
+|   |   ECommerce.Application.csproj.nuget.dgspec.json
+|   |   ECommerce.Application.csproj.nuget.g.props
+|   |   ECommerce.Application.csproj.nuget.g.targets
+|   |   project.assets.json
+|   |   project.nuget.cache
+|   |   
+|   +---Debug
+|   |   \---net10.0
+|   |       |   .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
+|   |       |   ECommerc.670E0CBE.Up2Date
+|   |       |   ECommerce.Application.AssemblyInfo.cs
+|   |       |   ECommerce.Application.AssemblyInfoInputs.cache
+|   |       |   ECommerce.Application.assets.cache
+|   |       |   ECommerce.Application.csproj.AssemblyReference.cache
+|   |       |   ECommerce.Application.csproj.BuildWithSkipAnalyzers
+|   |       |   ECommerce.Application.csproj.CoreCompileInputs.cache
+|   |       |   ECommerce.Application.csproj.FileListAbsolute.txt
+|   |       |   ECommerce.Application.dll
+|   |       |   ECommerce.Application.GeneratedMSBuildEditorConfig.editorconfig
+|   |       |   ECommerce.Application.GlobalUsings.g.cs
+|   |       |   ECommerce.Application.pdb
+|   |       |   ECommerce.Application.sourcelink.json
+|   |       |   
+|   |       +---ref
+|   |       |       ECommerce.Application.dll
+|   |       |       
+|   |       \---refint
+|   |               ECommerce.Application.dll
+|   |               
+|   \---Release
+|       \---net10.0
+|           |   .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
+|           |   ECommerce.Application.AssemblyInfo.cs
+|           |   ECommerce.Application.AssemblyInfoInputs.cache
+|           |   ECommerce.Application.assets.cache
+|           |   ECommerce.Application.csproj.AssemblyReference.cache
+|           |   ECommerce.Application.GeneratedMSBuildEditorConfig.editorconfig
+|           |   ECommerce.Application.GlobalUsings.g.cs
+|           |   
+|           +---ref
+|           \---refint
++---Services
+|       .gitkeep
+|       AuthService.cs
+|       CartService.cs
+|       CategoryService.cs
+|       InventoryService.cs
+|       MockPaymentService.cs
+|       OrderService.cs
+|       PaymentService.cs
+|       ProductService.cs
+|       UserService.cs
+|       
++---Utils
+|       ImageValidator.cs
+|       
+\---Validators
+        .gitkeep
+        

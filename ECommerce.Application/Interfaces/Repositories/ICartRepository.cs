@@ -10,5 +10,7 @@ namespace ECommerce.Application.Interfaces.Repositories
 
         Task<Cart?> GetWithItemsAsync(Guid cartId);
 
+        Task RemoveCartItemsByProductIdAsync(Guid productId);
+
     }
 }

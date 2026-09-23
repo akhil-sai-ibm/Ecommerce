@@ -15,6 +15,7 @@ namespace ECommerce.Infrastructure.Data.Configurations
             builder.Property(p => p.Description).IsRequired(false).HasMaxLength(2000);
             builder.Property(p => p.Price).IsRequired().HasColumnType("decimal(18,2)");
             builder.Property(p => p.SKU).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.ImageUrl).IsRequired(false).HasMaxLength(1000);
             builder.HasIndex(p => p.SKU).IsUnique();
 
             builder.Property(p => p.Status).IsRequired();

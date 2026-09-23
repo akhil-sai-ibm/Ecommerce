@@ -56,14 +56,19 @@ namespace ECommerce.API.Controllers
 
         [HttpPost("checkout")]
         [Microsoft.AspNetCore.Authorization.Authorize]
-        public async Task<IActionResult> Checkout([FromHeader(Name = "Idempotency-Key")] string? idempotencyKey = null)
+        public async Task<IActionResult> Checkout([FromBody] CheckoutRequestDto request, [FromHeader(Name = "Idempotency-Key")] string? idempotencyKey = null)
         {
             var userId = _currentUser.UserId;
             if (!userId.HasValue) return Unauthorized();
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
-                var order = await _orderService.CreateOrderFromCartAsync(userId.Value, idempotencyKey).ConfigureAwait(false);
+                var order = await _orderService.CreateOrderFromCartAsync(userId.Value, request, idempotencyKey).ConfigureAwait(false);
                 return CreatedAtAction(nameof(GetById), new { id = order.Id }, order);
             }
             catch (Exception ex) when (ex.Message.Contains("idempotency"))

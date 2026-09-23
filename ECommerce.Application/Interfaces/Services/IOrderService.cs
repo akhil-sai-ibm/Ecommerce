@@ -10,7 +10,7 @@ namespace ECommerce.Application.Interfaces.Services
         Task<OrderDto?> GetByIdAsync(Guid id);
         Task<IEnumerable<OrderDto>> GetByUserIdAsync(Guid userId);
         Task<IEnumerable<OrderDto>> GetAllAsync();
-        Task<OrderDto> CreateOrderFromCartAsync(Guid userId, string? idempotencyKey = null);
+        Task<OrderDto> CreateOrderFromCartAsync(Guid userId, CheckoutRequestDto request, string? idempotencyKey = null);
         Task UpdateOrderStatusAsync(Guid orderId, int status);
         Task CancelOrderAsync(Guid orderId);
     }

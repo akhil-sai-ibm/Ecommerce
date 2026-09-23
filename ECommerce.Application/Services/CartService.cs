@@ -146,7 +146,7 @@ namespace ECommerce.Application.Services
             {
                 var product = await _productRepository.GetByIdAsync(item.ProductId).ConfigureAwait(false);
                 var unitPrice = product?.Price ?? 0m;
-                var itemDto = new CartItemDto { Id = item.Id, ProductId = item.ProductId, ProductName = product?.Name, Quantity = item.Quantity, UnitPrice = unitPrice };
+                var itemDto = new CartItemDto { Id = item.Id, ProductId = item.ProductId, ProductName = product?.Name, ImageUrl = product?.ImageUrl, Quantity = item.Quantity, UnitPrice = unitPrice };
                 dto.Items.Add(itemDto);
                 total += unitPrice * item.Quantity;
             }

@@ -10,5 +10,11 @@ namespace ECommerce.Application.Interfaces.Services
         Task<UserDto?> GetByEmailAsync(string email);
         Task<UserDto> RegisterAsync(RegisterUserDto dto);
         Task UpdateAsync(Guid id, UpdateUserDto dto);
+
+        // Profile Management
+        Task<UserProfileDto?> GetUserProfileAsync(Guid userId);
+        Task UpdateUserProfileAsync(Guid userId, UpdateUserProfileDto dto);
+        Task<string> UploadProfileImageAsync(Guid userId, ECommerce.Application.DTOs.Common.FileData file);
+        Task DeleteProfileImageAsync(Guid userId);
     }
 }

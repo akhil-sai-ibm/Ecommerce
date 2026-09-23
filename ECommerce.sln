@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.9.12120.119 stable
+VisualStudioVersion = 18.9.12120.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Domain", "ECommerce.Domain\ECommerce.Domain.csproj", "{A1111111-1111-1111-1111-111111111111}"
 EndProject
@@ -13,6 +13,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.IntegrationTests", "ECommerce.IntegrationTests\ECommerce.IntegrationTests.csproj", "{C0183F44-0957-E6EB-82EE-7877867ABA21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.UnitTests", "ECommerce.UnitTests\ECommerce.UnitTests.csproj", "{EA0E44EA-6A60-5CAE-1A1F-508A5F4410BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69888300-32E7-4631-A93F-879E257EF888}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
