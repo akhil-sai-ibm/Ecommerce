@@ -1,0 +1,21 @@
+using System;
+using System.Threading.Tasks;
+using UserService.Application.DTOs.Users;
+using UserService.Application.DTOs.Common;
+
+namespace UserService.Application.Interfaces.Services
+{
+    public interface IUserService
+    {
+        Task<UserDto?> GetByIdAsync(Guid id);
+        Task<UserDto?> GetByEmailAsync(string email);
+        Task<UserDto> RegisterAsync(RegisterUserDto dto);
+        Task UpdateAsync(Guid id, UpdateUserDto dto);
+
+        // Profile Management
+        Task<UserProfileDto?> GetUserProfileAsync(Guid userId);
+        Task UpdateUserProfileAsync(Guid userId, UpdateUserProfileDto dto);
+        Task<string> UploadProfileImageAsync(Guid userId, FileData file);
+        Task DeleteProfileImageAsync(Guid userId);
+    }
+}

@@ -17,8 +17,12 @@ export const bulkUploadProducts = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
     
-    // Axios will automatically set the correct Content-Type for multipart/form-data
-    const response = await api.post('/products/bulk-upload', formData);
+    // Override the default application/json header from api.js
+    const response = await api.post('/products/bulk-upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
     return response.data;
 };
 
