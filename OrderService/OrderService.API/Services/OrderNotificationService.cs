@@ -19,5 +19,10 @@ namespace OrderService.API.Services
         {
             await _hubContext.Clients.Group($"User_{userId}").SendAsync("OrderConfirmed", orderId);
         }
+
+        public async Task SendOrderStatusUpdatedNotificationAsync(Guid userId, Guid orderId, int newStatus)
+        {
+            await _hubContext.Clients.Group($"User_{userId}").SendAsync("OrderStatusUpdated", new object[] { orderId, newStatus });
+        }
     }
 }

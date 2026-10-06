@@ -370,6 +370,13 @@ namespace ECommerce.Application.Services
                 order.UpdatedAt = DateTime.UtcNow;
                 _orderRepository.Update(order);
 
+                // Refund payment if necessary
+                if (order.Payment != null && order.Payment.Status == PaymentStatus.Successful)
+                {
+                    order.Payment.Status = PaymentStatus.Refunded;
+                    _logger.LogInformation("Order {OrderId} had a successful payment. Status updated to Refunded.", orderId);
+                }
+
                 // Restore inventory for all order items
                 if (order.Items != null && order.Items.Any())
                 {

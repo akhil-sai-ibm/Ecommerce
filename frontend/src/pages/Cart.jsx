@@ -102,6 +102,8 @@ const Cart = () => {
     const baseUrl = import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || 'https://localhost:52549';
     const resolveImageUrl = (url) => url ? (url.startsWith('http') ? url : `${baseUrl}${url}`) : null;
 
+    const cartTotal = cart.items.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+
     return (
         <div className="container" style={{ padding: '2rem 1rem' }}>
             <h1 style={{ marginBottom: '2rem' }}>Your Shopping Cart</h1>
@@ -116,8 +118,8 @@ const Cart = () => {
                                 <li key={item.id} style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
                                     <div style={{ display: 'flex', gap: '1rem', flex: '1 1 200px' }}>
                                         <div style={{ width: '80px', height: '80px', flexShrink: 0, backgroundColor: '#f3f4f6', borderRadius: '4px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            {item.imageUrl ? (
-                                                <img src={resolveImageUrl(item.imageUrl)} alt={item.productName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            {(item.productImageUrl || item.imageUrl) ? (
+                                                <img src={resolveImageUrl(item.productImageUrl || item.imageUrl)} alt={item.productName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             ) : (
                                                 <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>No Image</span>
                                             )}
@@ -182,12 +184,12 @@ const Cart = () => {
                         
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '1.125rem' }}>
                             <span>Subtotal</span>
-                            <span>${cart.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                            <span>${cartTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                         </div>
                         
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', fontSize: '1.5rem', fontWeight: 'bold' }}>
                             <span>Total</span>
-                            <span>${cart.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                            <span>${cartTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                         </div>
                         
                         <button 

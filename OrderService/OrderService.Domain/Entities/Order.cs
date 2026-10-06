@@ -7,9 +7,11 @@ namespace OrderService.Domain.Entities
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
+        public Guid? ReservationId { get; set; }
         public int Status { get; set; } // 0=Pending, 1=Confirmed, 2=Processing, 3=Shipped, 4=Delivered, 5=Cancelled
         public decimal TotalAmount { get; set; }
         public Guid? PaymentId { get; set; }
+        public bool IsPaymentSuccessful { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
@@ -20,6 +22,8 @@ namespace OrderService.Domain.Entities
         public string ShippingPostalCode { get; set; } = string.Empty;
         public string ShippingCountry { get; set; } = string.Empty;
         public string ShippingPhoneNumber { get; set; } = string.Empty;
+
+        public byte[] RowVersion { get; set; }
 
         public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
     }

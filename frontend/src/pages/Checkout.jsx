@@ -128,6 +128,8 @@ const Checkout = () => {
         );
     }
 
+    const cartTotal = cart.items.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+
     return (
         <div className="container" style={{ padding: '2rem 1rem' }}>
             <button className="btn btn-secondary back-button" style={{ marginBottom: '2rem' }} onClick={() => navigate('/cart')}>
@@ -208,7 +210,7 @@ const Checkout = () => {
                         
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', fontSize: '1.5rem', fontWeight: 'bold' }}>
                             <span>Total</span>
-                            <span>${cart.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                            <span>${cartTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                         </div>
                         
                         <button 

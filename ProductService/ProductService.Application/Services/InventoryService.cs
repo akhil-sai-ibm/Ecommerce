@@ -195,7 +195,7 @@ namespace ProductService.Application.Services
         {
             var reservation = await _reservationRepository.GetByReservationIdAsync(reservationId).ConfigureAwait(false);
             if (reservation == null) return; // Nothing to release
-            if (reservation.Status != Domain.Enums.ReservationStatus.Pending) return; // Only pending can be released
+            if (reservation.Status != Domain.Enums.ReservationStatus.Pending && reservation.Status != Domain.Enums.ReservationStatus.Confirmed) return; // Only pending or confirmed can be released
 
             foreach (var item in reservation.Items)
             {

@@ -46,13 +46,22 @@ namespace OrderService.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder(Guid id)
         {
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? Guid.Empty.ToString());
-            if (userId == Guid.Empty) return Unauthorized();
+            var userIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdStr) || !Guid.TryParse(userIdStr, out var userId) || userId == Guid.Empty) 
+                return Unauthorized();
 
             try
             {
-                var order = await _orderService.GetOrderAsync(id, userId);
-                return Ok(order);
+                if (User.IsInRole("Admin"))
+                {
+                    var order = await _orderService.GetOrderForAdminAsync(id);
+                    return Ok(order);
+                }
+                else
+                {
+                    var order = await _orderService.GetOrderAsync(id, userId);
+                    return Ok(order);
+                }
             }
             catch (InvalidOperationException)
             {
@@ -63,11 +72,53 @@ namespace OrderService.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserOrders()
         {
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? Guid.Empty.ToString());
-            if (userId == Guid.Empty) return Unauthorized();
+            var userIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdStr) || !Guid.TryParse(userIdStr, out var userId) || userId == Guid.Empty) 
+                return Unauthorized();
 
             var orders = await _orderService.GetUserOrdersAsync(userId);
             return Ok(orders);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetUserOrdersForAdmin(Guid userId)
+        {
+            var orders = await _orderService.GetUserOrdersAsync(userId);
+            return Ok(orders);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateOrderStatus(Guid id, [FromQuery] int status)
+        {
+            try
+            {
+                var order = await _orderService.UpdateOrderStatusAsync(id, status);
+                return Ok(order);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpPost("{id}/cancel")]
+        public async Task<IActionResult> CancelOrder(Guid id)
+        {
+            var userIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdStr) || !Guid.TryParse(userIdStr, out var userId) || userId == Guid.Empty) 
+                return Unauthorized();
+
+            try
+            {
+                await _orderService.CancelOrderAsync(id, userId);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
         }
     }
 }

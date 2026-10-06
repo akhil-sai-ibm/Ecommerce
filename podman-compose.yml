@@ -1,0 +1,122 @@
+version: '3.8'
+
+networks:
+  uc3-network:
+    driver: bridge
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: "Your_password123"
+    ports:
+      - "1433:1433"
+    networks:
+      - uc3-network
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  db-init:
+    build:
+      context: ./db-init
+      dockerfile: Containerfile
+    container_name: db-init
+    depends_on:
+      - sqlserver
+    networks:
+      - uc3-network
+    volumes:
+      - .:/src
+
+  userservice:
+    build:
+      context: ./UserService
+      dockerfile: Containerfile
+    container_name: userservice
+    depends_on:
+      - sqlserver
+    networks:
+      - uc3-network
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=UserServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True"
+      ASPNETCORE_URLS: "http://+:8080"
+    volumes:
+      - userservice-uploads:/app/wwwroot/uploads
+
+  productservice:
+    build:
+      context: ./ProductService
+      dockerfile: Containerfile
+    container_name: productservice
+    depends_on:
+      - sqlserver
+    networks:
+      - uc3-network
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=ProductServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True"
+      ASPNETCORE_URLS: "http://+:8080"
+    volumes:
+      - productservice-uploads:/app/wwwroot/uploads
+
+  orderservice:
+    build:
+      context: ./OrderService
+      dockerfile: Containerfile
+    container_name: orderservice
+    depends_on:
+      - sqlserver
+    networks:
+      - uc3-network
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=OrderServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True"
+      ProductServiceUrl: "http://productservice:8080"
+      PaymentServiceUrl: "http://paymentservice:8080"
+      ASPNETCORE_URLS: "http://+:8080"
+
+  paymentservice:
+    build:
+      context: ./PaymentService
+      dockerfile: Containerfile
+    container_name: paymentservice
+    depends_on:
+      - sqlserver
+    networks:
+      - uc3-network
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=PaymentServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True"
+      ServiceUrls__OrderService: "http://orderservice:8080"
+      ASPNETCORE_URLS: "http://+:8080"
+
+  apigateway:
+    build:
+      context: ./ApiGateway
+      dockerfile: Containerfile
+    container_name: apigateway
+    networks:
+      - uc3-network
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+    depends_on:
+      - userservice
+      - productservice
+      - orderservice
+      - paymentservice
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Containerfile
+    container_name: frontend
+    networks:
+      - uc3-network
+    ports:
+      - "5173:80"
+
+volumes:
+  sqlserver-data:
+  userservice-uploads:
+  productservice-uploads:

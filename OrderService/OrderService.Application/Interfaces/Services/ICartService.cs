@@ -8,7 +8,8 @@ namespace OrderService.Application.Interfaces.Services
     {
         Task<CartDto> GetCartAsync(Guid userId);
         Task<CartDto> AddToCartAsync(Guid userId, AddToCartDto addToCartDto);
-        Task<CartDto> RemoveFromCartAsync(Guid userId, Guid productId);
+        Task<CartDto> UpdateCartItemQuantityAsync(Guid userId, Guid cartItemId, int quantity);
+        Task<CartDto> RemoveFromCartAsync(Guid userId, Guid cartItemId);
         Task ClearCartAsync(Guid userId);
     }
 }

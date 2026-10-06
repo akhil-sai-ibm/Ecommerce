@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using OrderService.Infrastructure.Data;
 using Microsoft.IdentityModel.Tokens;
 using OrderService.Infrastructure;
+using OrderService.API.Middleware;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +18,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<OrderService.API.BackgroundServices.OutboxProcessorBackgroundService>();
+builder.Services.AddHostedService<OrderService.API.BackgroundServices.OrderExpirationBackgroundService>();
 builder.Services.AddScoped<OrderService.Application.Interfaces.Services.IOrderNotificationService, OrderService.API.Services.OrderNotificationService>();
 
 // Add Authentication
@@ -53,7 +57,12 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<OrderServiceDbContext>("Database");
+
 var app = builder.Build();
+
+app.UseExceptionHandling();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -69,5 +78,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<OrderService.API.Hubs.OrderHub>("/orderhub");
+
+app.MapHealthChecks("/health");
 
 app.Run();

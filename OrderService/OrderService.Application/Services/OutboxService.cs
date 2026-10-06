@@ -14,8 +14,8 @@ namespace OrderService.Application.Services
     {
         private readonly IOutboxRepository _outboxRepository;
         private readonly IOrderRepository _orderRepository;
-        private readonly IPaymentRepository _paymentRepository;
         private readonly IProductServiceClient _productServiceClient;
+        private readonly IPaymentServiceClient _paymentServiceClient;
         private readonly IOrderNotificationService _notificationService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<OutboxService> _logger;
@@ -23,16 +23,16 @@ namespace OrderService.Application.Services
         public OutboxService(
             IOutboxRepository outboxRepository,
             IOrderRepository orderRepository,
-            IPaymentRepository paymentRepository,
             IProductServiceClient productServiceClient,
+            IPaymentServiceClient paymentServiceClient,
             IOrderNotificationService notificationService,
             IUnitOfWork unitOfWork,
             ILogger<OutboxService> logger)
         {
             _outboxRepository = outboxRepository;
             _orderRepository = orderRepository;
-            _paymentRepository = paymentRepository;
             _productServiceClient = productServiceClient;
+            _paymentServiceClient = paymentServiceClient;
             _notificationService = notificationService;
             _unitOfWork = unitOfWork;
             _logger = logger;
@@ -56,30 +56,32 @@ namespace OrderService.Application.Services
                         var order = await _orderRepository.GetByIdAsync(orderId);
                         if (order == null) continue;
 
-                        // 1. Process Payment
-                        var payment = new Payment
-                        {
-                            Id = Guid.NewGuid(),
-                            OrderId = orderId,
-                            Amount = order.TotalAmount,
-                            Status = "Success", // Dummy success
-                            ProcessedAt = DateTime.UtcNow,
-                            TransactionId = Guid.NewGuid().ToString()
-                        };
-                        
-                        await _paymentRepository.AddAsync(payment);
-                        order.PaymentId = payment.Id;
-                        
-                        // 2. Confirm Inventory in ProductService
+                        // 1. Confirm Inventory in ProductService
                         await _productServiceClient.ConfirmInventoryAsync(reservationId);
                         
-                        // 3. Update Order Status
-                        order.Status = 2; // Processing (or confirmed)
-                        await _orderRepository.UpdateAsync(order);
-
-                        // 4. Send SignalR Notification
+                        // 2. Send SignalR Notification
                         await _notificationService.SendOrderConfirmedNotificationAsync(userId, orderId);
 
+                        message.Processed = true;
+                        message.ProcessedAt = DateTime.UtcNow;
+                    }
+                    else if (message.EventType == "OrderCancelled")
+                    {
+                        var payload = JsonSerializer.Deserialize<JsonElement>(message.Payload);
+                        // Make sure we handle old orders where ReservationId might be missing in DB,
+                        // but since OrderCancelled is created WITH ReservationId, it will be in the payload if available.
+                        if (payload.TryGetProperty("ReservationId", out var resIdElement) && resIdElement.ValueKind != JsonValueKind.Null)
+                        {
+                            var reservationId = resIdElement.GetGuid();
+                            await _productServiceClient.ReleaseInventoryAsync(reservationId);
+                        }
+                        
+                        if (payload.TryGetProperty("IsPaymentSuccessful", out var isPaymentElement) && isPaymentElement.GetBoolean())
+                        {
+                            var orderId = payload.GetProperty("OrderId").GetGuid();
+                            await _paymentServiceClient.InitiateRefundAsync(orderId);
+                        }
+                        
                         message.Processed = true;
                         message.ProcessedAt = DateTime.UtcNow;
                     }

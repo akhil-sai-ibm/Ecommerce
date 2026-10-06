@@ -1,5 +1,6 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using UserService.Infrastructure.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using UserService.Application.DependencyInjection;
@@ -7,6 +8,7 @@ using UserService.Infrastructure.DependencyInjection;
 using UserService.API.Services;
 using UserService.Application.Interfaces.Services;
 using Microsoft.OpenApi.Models;
+using UserService.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,6 +80,11 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorization();
+
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<UserServiceDbContext>("Database");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -99,6 +106,8 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
     RequestPath = "/uploads"
 });
+
+app.UseExceptionHandling();
 app.UseRouting();
 
 app.UseCors("CorsPolicy");
@@ -107,5 +116,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health");
 
 app.Run();

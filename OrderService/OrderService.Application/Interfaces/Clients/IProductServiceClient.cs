@@ -10,6 +10,7 @@ namespace OrderService.Application.Interfaces.Clients
         Task ReleaseInventoryAsync(Guid reservationId);
         Task ConfirmInventoryAsync(Guid reservationId);
         Task<IEnumerable<ProductSnapshot>> GetBulkProductsAsync(IEnumerable<Guid> productIds);
+        Task<int> GetProductStockAsync(Guid productId);
     }
 
     public class ProductSnapshot

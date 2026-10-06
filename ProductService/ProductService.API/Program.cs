@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using ProductService.Infrastructure.Data;
 using ProductService.API.Middleware;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -69,6 +71,8 @@ builder.Services.Configure<ProductService.Application.Configuration.BulkProductO
 builder.Services.AddApplicationServices();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddHostedService<ProductService.API.BackgroundServices.LowStockBackgroundService>();
+
 // JWT Authentication
 var jwtSection = builder.Configuration.GetSection("JwtSettings");
 var secret = jwtSection.GetValue<string>("SecretKey");
@@ -98,6 +102,9 @@ if (!string.IsNullOrEmpty(secret))
 
     builder.Services.AddAuthorization();
 }
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<ProductServiceDbContext>("Database");
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -133,5 +140,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health");
 
 app.Run();

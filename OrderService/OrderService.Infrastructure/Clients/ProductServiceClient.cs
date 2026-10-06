@@ -72,5 +72,22 @@ namespace OrderService.Infrastructure.Clients
             response.EnsureSuccessStatusCode();
             return false;
         }
+
+        public async Task<int> GetProductStockAsync(Guid productId)
+        {
+            var response = await _httpClient.GetAsync($"/api/inventory/{productId}");
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return 0;
+            }
+            response.EnsureSuccessStatusCode();
+            var item = await response.Content.ReadFromJsonAsync<InventorySnapshot>();
+            return item?.Quantity ?? 0;
+        }
+    }
+
+    public class InventorySnapshot
+    {
+        public int Quantity { get; set; }
     }
 }

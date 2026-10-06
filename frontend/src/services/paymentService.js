@@ -1,9 +1,10 @@
 import api from './api';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getPaymentByOrderId = async (orderId) => {
     try {
         const response = await api.get(`/payments/order/${orderId}`);
-        return response.data;
+        return response.data || null;
     } catch (error) {
         if (error.response && error.response.status === 404) {
             // No payment found for this order
@@ -14,7 +15,11 @@ export const getPaymentByOrderId = async (orderId) => {
 };
 
 export const createPayment = async (data) => {
-    const response = await api.post('/payments', data);
+    const response = await api.post('/payments', data, {
+        headers: {
+            'Idempotency-Key': uuidv4()
+        }
+    });
     return response.data;
 };
 

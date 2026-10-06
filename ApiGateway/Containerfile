@@ -1,0 +1,17 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY ["ApiGateway.csproj", "."]
+RUN dotnet restore "ApiGateway.csproj"
+
+COPY . .
+# Replace ocelot.json with ocelot.docker.json if it exists (we will create it)
+RUN cp ocelot.docker.json ocelot.json
+
+RUN dotnet publish "ApiGateway.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+EXPOSE 8080
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "ApiGateway.dll"]

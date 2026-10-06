@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
@@ -24,6 +25,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddOcelot(builder.Configuration);
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 app.UseCors("CorsPolicy");
@@ -36,6 +39,12 @@ app.Use(async (context, next) =>
         context.Request.Headers.Remove("X-Internal-Service-Key");
     }
     await next();
+});
+
+app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHealthChecks("/health");
 });
 
 app.UseWebSockets();

@@ -92,9 +92,30 @@
       "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5032 } ]
     },
     {
+      "UpstreamPathTemplate": "/api/orders/user/{userId}",
+      "UpstreamHttpMethod": [ "Get", "Options" ],
+      "DownstreamPathTemplate": "/api/Order/user/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5032 } ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/orders/{id}/status",
+      "UpstreamHttpMethod": [ "Put", "Options" ],
+      "DownstreamPathTemplate": "/api/Order/{id}/status",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5032 } ]
+    },
+    {
       "UpstreamPathTemplate": "/api/orders/{id}",
       "UpstreamHttpMethod": [ "Get", "Options" ],
       "DownstreamPathTemplate": "/api/Order/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5032 } ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/orders/{id}/cancel",
+      "UpstreamHttpMethod": [ "Post", "Options" ],
+      "DownstreamPathTemplate": "/api/Order/{id}/cancel",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5032 } ]
     },
@@ -114,9 +135,16 @@
     },
     {
       "UpstreamPathTemplate": "/api/cart/items/{id}",
-      "UpstreamHttpMethod": [ "Delete", "Options" ],
+      "UpstreamHttpMethod": [ "Put", "Delete", "Options" ],
       "DownstreamPathTemplate": "/api/Cart/items/{id}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5032 } ]
+    },
+    {
+      "UpstreamPathTemplate": "/hubs/orders/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Options" ],
+      "DownstreamPathTemplate": "/orderhub/{everything}",
+      "DownstreamScheme": "ws",
       "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5032 } ]
     },
     {
@@ -125,6 +153,20 @@
       "DownstreamPathTemplate": "/orderhub",
       "DownstreamScheme": "ws",
       "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5032 } ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/payments/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Options" ],
+      "DownstreamPathTemplate": "/api/Payments/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5185 } ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/payments",
+      "UpstreamHttpMethod": [ "Post", "Options" ],
+      "DownstreamPathTemplate": "/api/Payments",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [ { "Host": "localhost", "Port": 5185 } ]
     },
     {
       "UpstreamPathTemplate": "/uploads/profiles/{everything}",

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OrderService.Domain.Entities;
+using PaymentService.Domain.Entities;
 
-namespace OrderService.Infrastructure.Data.Configurations
+namespace PaymentService.Infrastructure.Data.Configurations
 {
     public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
     {
@@ -10,7 +10,7 @@ namespace OrderService.Infrastructure.Data.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Amount).HasColumnType("decimal(18,2)");
-            builder.HasOne(x => x.Order).WithOne().HasForeignKey<Payment>(x => x.OrderId);
+            
         }
     }
 }

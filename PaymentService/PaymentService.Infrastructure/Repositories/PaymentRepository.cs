@@ -1,17 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using OrderService.Application.Interfaces.Repositories;
-using OrderService.Domain.Entities;
-using OrderService.Infrastructure.Data;
+using PaymentService.Application.Interfaces.Repositories;
+using PaymentService.Domain.Entities;
+using PaymentService.Infrastructure.Data;
 using System;
 using System.Threading.Tasks;
 
-namespace OrderService.Infrastructure.Repositories
+namespace PaymentService.Infrastructure.Repositories
 {
     public class PaymentRepository : IPaymentRepository
     {
-        private readonly OrderServiceDbContext _context;
+        private readonly PaymentServiceDbContext _context;
 
-        public PaymentRepository(OrderServiceDbContext context)
+        public PaymentRepository(PaymentServiceDbContext context)
         {
             _context = context;
         }
@@ -28,10 +28,20 @@ namespace OrderService.Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.OrderId == orderId);
         }
 
+        public async Task<Payment?> GetByIdAsync(Guid id)
+        {
+            return await _context.Payments.FindAsync(id);
+        }
+
         public Task UpdateAsync(Payment payment)
         {
             _context.Payments.Update(payment);
             return Task.CompletedTask;
+        }
+
+        public void Delete(Payment payment)
+        {
+            _context.Payments.Remove(payment);
         }
     }
 }

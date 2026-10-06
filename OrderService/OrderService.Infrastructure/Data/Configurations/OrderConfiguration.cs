@@ -17,6 +17,7 @@ namespace OrderService.Infrastructure.Data.Configurations
             builder.Property(x => x.ShippingPostalCode).IsRequired().HasMaxLength(20);
             builder.Property(x => x.ShippingCountry).IsRequired().HasMaxLength(100);
             builder.Property(x => x.ShippingPhoneNumber).IsRequired().HasMaxLength(20);
+            builder.Property(x => x.RowVersion).IsRowVersion();
         }
     }
 }

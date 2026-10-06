@@ -81,7 +81,6 @@ namespace OrderService.Application.Services
                 {
                     cart.Items.Add(new CartItem
                     {
-                        Id = Guid.NewGuid(),
                         CartId = cart.Id,
                         ProductId = addToCartDto.ProductId,
                         Quantity = addToCartDto.Quantity,
@@ -101,7 +100,37 @@ namespace OrderService.Application.Services
             }
         }
 
-        public async Task<CartDto> RemoveFromCartAsync(Guid userId, Guid productId)
+        public async Task<CartDto> UpdateCartItemQuantityAsync(Guid userId, Guid cartItemId, int quantity)
+        {
+            var semaphore = _cartLocks.GetOrAdd(userId, _ => new System.Threading.SemaphoreSlim(1, 1));
+            await semaphore.WaitAsync();
+            try
+            {
+                var cart = await _cartRepository.GetByUserIdAsync(userId);
+                if (cart == null)
+                    throw new System.Collections.Generic.KeyNotFoundException("Cart not found");
+
+                var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
+                if (item == null)
+                    throw new System.Collections.Generic.KeyNotFoundException("CartItem not found in your cart");
+
+                var availableStock = await _productServiceClient.GetProductStockAsync(item.ProductId);
+                if (quantity > availableStock)
+                    throw new InvalidOperationException($"Insufficient stock. Available: {availableStock}");
+
+                item.Quantity = quantity;
+                cart.UpdatedAt = DateTime.UtcNow;
+                await _unitOfWork.SaveChangesAsync();
+
+                return await MapToDtoAsync(cart);
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        public async Task<CartDto> RemoveFromCartAsync(Guid userId, Guid cartItemId)
         {
             var semaphore = _cartLocks.GetOrAdd(userId, _ => new System.Threading.SemaphoreSlim(1, 1));
             await semaphore.WaitAsync();
@@ -111,7 +140,7 @@ namespace OrderService.Application.Services
                 if (cart == null)
                     return new CartDto { UserId = userId };
 
-                var item = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+                var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
                 if (item != null)
                 {
                     cart.Items.Remove(item);

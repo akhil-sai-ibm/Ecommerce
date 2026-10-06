@@ -1,0 +1,24 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy all csproj files first
+COPY ["UserService.API/UserService.API.csproj", "UserService.API/"]
+COPY ["UserService.Application/UserService.Application.csproj", "UserService.Application/"]
+COPY ["UserService.Domain/UserService.Domain.csproj", "UserService.Domain/"]
+COPY ["UserService.Infrastructure/UserService.Infrastructure.csproj", "UserService.Infrastructure/"]
+
+# Restore
+RUN dotnet restore "UserService.API/UserService.API.csproj"
+
+# Copy the rest
+COPY . .
+
+# Build and Publish
+WORKDIR "/src/UserService.API"
+RUN dotnet publish "UserService.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+EXPOSE 8080
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "UserService.API.dll"]
