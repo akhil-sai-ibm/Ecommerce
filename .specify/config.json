@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/github/spec-kit/main/schema.json",
+  "project": {
+    "name": "ECommerce Microservices System",
+    "version": "1.0.0",
+    "description": "Production-grade e-commerce microservices platform built with .NET 10, React 19, Clean Architecture, and Spec-Driven Development using GitHub Speckit."
+  },
+  "specifications": {
+    "directory": "specs",
+    "templatesDirectory": ".specify/templates",
+    "namingConvention": "{id}-{title-kebab-case}.md"
+  },
+  "memory": {
+    "directory": ".specify/memory",
+    "constitution": ".specify/memory/constitution.md"
+  },
+  "ai": {
+    "target": "copilot",
+    "context": {
+      "rules": ".specify/memory/constitution.md"
+    }
+  }
+}
+

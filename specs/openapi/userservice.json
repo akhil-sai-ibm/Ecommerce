@@ -1,0 +1,766 @@
+﻿{
+    "openapi":  "3.0.1",
+    "info":  {
+                 "title":  "UserService API",
+                 "description":  "User Service API for authentication, user profiles, and image management in the ECommerce system.",
+                 "version":  "v1"
+             },
+    "paths":  {
+                  "/api/Auth/register":  {
+                                             "post":  {
+                                                          "tags":  [
+                                                                       "Auth"
+                                                                   ],
+                                                          "summary":  "Registers a new user account with default customer role.",
+                                                          "operationId":  "Auth_Register",
+                                                          "requestBody":  {
+                                                                              "description":  "Registration credentials and user information.",
+                                                                              "content":  {
+                                                                                              "application/json":  {
+                                                                                                                       "schema":  {
+                                                                                                                                      "$ref":  "#/components/schemas/RegisterRequest"
+                                                                                                                                  }
+                                                                                                                   },
+                                                                                              "text/json":  {
+                                                                                                                "schema":  {
+                                                                                                                               "$ref":  "#/components/schemas/RegisterRequest"
+                                                                                                                           }
+                                                                                                            },
+                                                                                              "application/*+json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "$ref":  "#/components/schemas/RegisterRequest"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                          }
+                                                                          },
+                                                          "responses":  {
+                                                                            "201":  {
+                                                                                        "description":  "User registered successfully.",
+                                                                                        "content":  {
+                                                                                                        "text/plain":  {
+                                                                                                                           "schema":  {
+                                                                                                                                          "$ref":  "#/components/schemas/AuthResponse"
+                                                                                                                                      }
+                                                                                                                       },
+                                                                                                        "application/json":  {
+                                                                                                                                 "schema":  {
+                                                                                                                                                "$ref":  "#/components/schemas/AuthResponse"
+                                                                                                                                            }
+                                                                                                                             },
+                                                                                                        "text/json":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "$ref":  "#/components/schemas/AuthResponse"
+                                                                                                                                     }
+                                                                                                                      }
+                                                                                                    }
+                                                                                    },
+                                                                            "400":  {
+                                                                                        "description":  "Validation failure or email already in use.",
+                                                                                        "content":  {
+                                                                                                        "text/plain":  {
+                                                                                                                           "schema":  {
+                                                                                                                                          "type":  "string"
+                                                                                                                                      }
+                                                                                                                       },
+                                                                                                        "application/json":  {
+                                                                                                                                 "schema":  {
+                                                                                                                                                "type":  "string"
+                                                                                                                                            }
+                                                                                                                             },
+                                                                                                        "text/json":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "type":  "string"
+                                                                                                                                     }
+                                                                                                                      }
+                                                                                                    }
+                                                                                    }
+                                                                        }
+                                                      }
+                                         },
+                  "/api/Auth/login":  {
+                                          "post":  {
+                                                       "tags":  [
+                                                                    "Auth"
+                                                                ],
+                                                       "summary":  "Authenticates user credentials and generates a JWT access token.",
+                                                       "operationId":  "Auth_Login",
+                                                       "requestBody":  {
+                                                                           "description":  "User email and password.",
+                                                                           "content":  {
+                                                                                           "application/json":  {
+                                                                                                                    "schema":  {
+                                                                                                                                   "$ref":  "#/components/schemas/LoginRequest"
+                                                                                                                               }
+                                                                                                                },
+                                                                                           "text/json":  {
+                                                                                                             "schema":  {
+                                                                                                                            "$ref":  "#/components/schemas/LoginRequest"
+                                                                                                                        }
+                                                                                                         },
+                                                                                           "application/*+json":  {
+                                                                                                                      "schema":  {
+                                                                                                                                     "$ref":  "#/components/schemas/LoginRequest"
+                                                                                                                                 }
+                                                                                                                  }
+                                                                                       }
+                                                                       },
+                                                       "responses":  {
+                                                                         "200":  {
+                                                                                     "description":  "Authentication successful.",
+                                                                                     "content":  {
+                                                                                                     "text/plain":  {
+                                                                                                                        "schema":  {
+                                                                                                                                       "$ref":  "#/components/schemas/AuthResponse"
+                                                                                                                                   }
+                                                                                                                    },
+                                                                                                     "application/json":  {
+                                                                                                                              "schema":  {
+                                                                                                                                             "$ref":  "#/components/schemas/AuthResponse"
+                                                                                                                                         }
+                                                                                                                          },
+                                                                                                     "text/json":  {
+                                                                                                                       "schema":  {
+                                                                                                                                      "$ref":  "#/components/schemas/AuthResponse"
+                                                                                                                                  }
+                                                                                                                   }
+                                                                                                 }
+                                                                                 },
+                                                                         "401":  {
+                                                                                     "description":  "Invalid credentials provided.",
+                                                                                     "content":  {
+                                                                                                     "text/plain":  {
+                                                                                                                        "schema":  {
+                                                                                                                                       "type":  "string"
+                                                                                                                                   }
+                                                                                                                    },
+                                                                                                     "application/json":  {
+                                                                                                                              "schema":  {
+                                                                                                                                             "type":  "string"
+                                                                                                                                         }
+                                                                                                                          },
+                                                                                                     "text/json":  {
+                                                                                                                       "schema":  {
+                                                                                                                                      "type":  "string"
+                                                                                                                                  }
+                                                                                                                   }
+                                                                                                 }
+                                                                                 }
+                                                                     }
+                                                   }
+                                      },
+                  "/api/Users/profile":  {
+                                             "get":  {
+                                                         "tags":  [
+                                                                      "Users"
+                                                                  ],
+                                                         "summary":  "Retrieves the current authenticated user\u0027s profile details.",
+                                                         "operationId":  "Users_GetProfile",
+                                                         "responses":  {
+                                                                           "200":  {
+                                                                                       "description":  "User profile successfully retrieved.",
+                                                                                       "content":  {
+                                                                                                       "text/plain":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "$ref":  "#/components/schemas/UserProfileDto"
+                                                                                                                                     }
+                                                                                                                      },
+                                                                                                       "application/json":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "$ref":  "#/components/schemas/UserProfileDto"
+                                                                                                                                           }
+                                                                                                                            },
+                                                                                                       "text/json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "$ref":  "#/components/schemas/UserProfileDto"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                                   }
+                                                                                   },
+                                                                           "401":  {
+                                                                                       "description":  "Missing or invalid authentication token.",
+                                                                                       "content":  {
+                                                                                                       "text/plain":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                     }
+                                                                                                                      },
+                                                                                                       "application/json":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                           }
+                                                                                                                            },
+                                                                                                       "text/json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                                   }
+                                                                                   },
+                                                                           "404":  {
+                                                                                       "description":  "User profile not found.",
+                                                                                       "content":  {
+                                                                                                       "text/plain":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "type":  "string"
+                                                                                                                                     }
+                                                                                                                      },
+                                                                                                       "application/json":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "type":  "string"
+                                                                                                                                           }
+                                                                                                                            },
+                                                                                                       "text/json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "type":  "string"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                                   }
+                                                                                   }
+                                                                       },
+                                                         "security":  [
+                                                                          {
+                                                                              "Bearer":  [
+
+                                                                                         ]
+                                                                          }
+                                                                      ]
+                                                     },
+                                             "put":  {
+                                                         "tags":  [
+                                                                      "Users"
+                                                                  ],
+                                                         "summary":  "Updates the current authenticated user\u0027s profile details (first name, last name, phone).",
+                                                         "operationId":  "Users_UpdateProfile",
+                                                         "requestBody":  {
+                                                                             "description":  "Updated user profile information.",
+                                                                             "content":  {
+                                                                                             "application/json":  {
+                                                                                                                      "schema":  {
+                                                                                                                                     "$ref":  "#/components/schemas/UpdateUserProfileDto"
+                                                                                                                                 }
+                                                                                                                  },
+                                                                                             "text/json":  {
+                                                                                                               "schema":  {
+                                                                                                                              "$ref":  "#/components/schemas/UpdateUserProfileDto"
+                                                                                                                          }
+                                                                                                           },
+                                                                                             "application/*+json":  {
+                                                                                                                        "schema":  {
+                                                                                                                                       "$ref":  "#/components/schemas/UpdateUserProfileDto"
+                                                                                                                                   }
+                                                                                                                    }
+                                                                                         }
+                                                                         },
+                                                         "responses":  {
+                                                                           "204":  {
+                                                                                       "description":  "Profile updated successfully."
+                                                                                   },
+                                                                           "400":  {
+                                                                                       "description":  "Validation error or invalid input data.",
+                                                                                       "content":  {
+                                                                                                       "text/plain":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "type":  "string"
+                                                                                                                                     }
+                                                                                                                      },
+                                                                                                       "application/json":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "type":  "string"
+                                                                                                                                           }
+                                                                                                                            },
+                                                                                                       "text/json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "type":  "string"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                                   }
+                                                                                   },
+                                                                           "401":  {
+                                                                                       "description":  "Missing or invalid authentication token.",
+                                                                                       "content":  {
+                                                                                                       "text/plain":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                     }
+                                                                                                                      },
+                                                                                                       "application/json":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                           }
+                                                                                                                            },
+                                                                                                       "text/json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                                   }
+                                                                                   }
+                                                                       },
+                                                         "security":  [
+                                                                          {
+                                                                              "Bearer":  [
+
+                                                                                         ]
+                                                                          }
+                                                                      ]
+                                                     }
+                                         },
+                  "/api/Users/profile/image":  {
+                                                   "post":  {
+                                                                "tags":  [
+                                                                             "Users"
+                                                                         ],
+                                                                "summary":  "Uploads an avatar image for the current authenticated user.",
+                                                                "operationId":  "Users_UploadProfileImage",
+                                                                "requestBody":  {
+                                                                                    "content":  {
+                                                                                                    "multipart/form-data":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "type":  "object",
+                                                                                                                                               "properties":  {
+                                                                                                                                                                  "file":  {
+                                                                                                                                                                               "type":  "string",
+                                                                                                                                                                               "format":  "binary"
+                                                                                                                                                                           }
+                                                                                                                                                              }
+                                                                                                                                           },
+                                                                                                                                "encoding":  {
+                                                                                                                                                 "file":  {
+                                                                                                                                                              "style":  "form"
+                                                                                                                                                          }
+                                                                                                                                             }
+                                                                                                                            }
+                                                                                                }
+                                                                                },
+                                                                "responses":  {
+                                                                                  "200":  {
+                                                                                              "description":  "Image uploaded successfully.",
+                                                                                              "content":  {
+                                                                                                              "text/plain":  {
+                                                                                                                                 "schema":  {
+
+                                                                                                                                            }
+                                                                                                                             },
+                                                                                                              "application/json":  {
+                                                                                                                                       "schema":  {
+
+                                                                                                                                                  }
+                                                                                                                                   },
+                                                                                                              "text/json":  {
+                                                                                                                                "schema":  {
+
+                                                                                                                                           }
+                                                                                                                            }
+                                                                                                          }
+                                                                                          },
+                                                                                  "400":  {
+                                                                                              "description":  "No file uploaded, invalid file format, or validation failure.",
+                                                                                              "content":  {
+                                                                                                              "text/plain":  {
+                                                                                                                                 "schema":  {
+                                                                                                                                                "type":  "string"
+                                                                                                                                            }
+                                                                                                                             },
+                                                                                                              "application/json":  {
+                                                                                                                                       "schema":  {
+                                                                                                                                                      "type":  "string"
+                                                                                                                                                  }
+                                                                                                                                   },
+                                                                                                              "text/json":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "type":  "string"
+                                                                                                                                           }
+                                                                                                                            }
+                                                                                                          }
+                                                                                          },
+                                                                                  "401":  {
+                                                                                              "description":  "Missing or invalid authentication token.",
+                                                                                              "content":  {
+                                                                                                              "text/plain":  {
+                                                                                                                                 "schema":  {
+                                                                                                                                                "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                            }
+                                                                                                                             },
+                                                                                                              "application/json":  {
+                                                                                                                                       "schema":  {
+                                                                                                                                                      "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                  }
+                                                                                                                                   },
+                                                                                                              "text/json":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                           }
+                                                                                                                            }
+                                                                                                          }
+                                                                                          },
+                                                                                  "415":  {
+                                                                                              "description":  "Request payload is not multipart/form-data.",
+                                                                                              "content":  {
+                                                                                                              "text/plain":  {
+                                                                                                                                 "schema":  {
+                                                                                                                                                "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                            }
+                                                                                                                             },
+                                                                                                              "application/json":  {
+                                                                                                                                       "schema":  {
+                                                                                                                                                      "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                  }
+                                                                                                                                   },
+                                                                                                              "text/json":  {
+                                                                                                                                "schema":  {
+                                                                                                                                               "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                           }
+                                                                                                                            }
+                                                                                                          }
+                                                                                          }
+                                                                              },
+                                                                "security":  [
+                                                                                 {
+                                                                                     "Bearer":  [
+
+                                                                                                ]
+                                                                                 }
+                                                                             ]
+                                                            },
+                                                   "delete":  {
+                                                                  "tags":  [
+                                                                               "Users"
+                                                                           ],
+                                                                  "summary":  "Deletes the avatar image for the current authenticated user.",
+                                                                  "operationId":  "Users_DeleteProfileImage",
+                                                                  "responses":  {
+                                                                                    "204":  {
+                                                                                                "description":  "Profile image removed successfully."
+                                                                                            },
+                                                                                    "400":  {
+                                                                                                "description":  "Operation failure or image could not be deleted.",
+                                                                                                "content":  {
+                                                                                                                "text/plain":  {
+                                                                                                                                   "schema":  {
+                                                                                                                                                  "type":  "string"
+                                                                                                                                              }
+                                                                                                                               },
+                                                                                                                "application/json":  {
+                                                                                                                                         "schema":  {
+                                                                                                                                                        "type":  "string"
+                                                                                                                                                    }
+                                                                                                                                     },
+                                                                                                                "text/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "type":  "string"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                            }
+                                                                                            },
+                                                                                    "401":  {
+                                                                                                "description":  "Missing or invalid authentication token.",
+                                                                                                "content":  {
+                                                                                                                "text/plain":  {
+                                                                                                                                   "schema":  {
+                                                                                                                                                  "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                              }
+                                                                                                                               },
+                                                                                                                "application/json":  {
+                                                                                                                                         "schema":  {
+                                                                                                                                                        "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                    }
+                                                                                                                                     },
+                                                                                                                "text/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                            }
+                                                                                            }
+                                                                                },
+                                                                  "security":  [
+                                                                                   {
+                                                                                       "Bearer":  [
+
+                                                                                                  ]
+                                                                                   }
+                                                                               ]
+                                                              }
+                                               },
+                  "/WeatherForecast":  {
+                                           "get":  {
+                                                       "tags":  [
+                                                                    "WeatherForecast"
+                                                                ],
+                                                       "operationId":  "WeatherForecast_Get",
+                                                       "responses":  {
+                                                                         "200":  {
+                                                                                     "description":  "OK",
+                                                                                     "content":  {
+                                                                                                     "text/plain":  {
+                                                                                                                        "schema":  {
+                                                                                                                                       "type":  "array",
+                                                                                                                                       "items":  {
+                                                                                                                                                     "$ref":  "#/components/schemas/WeatherForecast"
+                                                                                                                                                 }
+                                                                                                                                   }
+                                                                                                                    },
+                                                                                                     "application/json":  {
+                                                                                                                              "schema":  {
+                                                                                                                                             "type":  "array",
+                                                                                                                                             "items":  {
+                                                                                                                                                           "$ref":  "#/components/schemas/WeatherForecast"
+                                                                                                                                                       }
+                                                                                                                                         }
+                                                                                                                          },
+                                                                                                     "text/json":  {
+                                                                                                                       "schema":  {
+                                                                                                                                      "type":  "array",
+                                                                                                                                      "items":  {
+                                                                                                                                                    "$ref":  "#/components/schemas/WeatherForecast"
+                                                                                                                                                }
+                                                                                                                                  }
+                                                                                                                   }
+                                                                                                 }
+                                                                                 }
+                                                                     }
+                                                   }
+                                       }
+              },
+    "components":  {
+                       "schemas":  {
+                                       "AuthResponse":  {
+                                                            "type":  "object",
+                                                            "properties":  {
+                                                                               "token":  {
+                                                                                             "type":  "string",
+                                                                                             "description":  "JWT bearer access token for authorized requests.",
+                                                                                             "nullable":  true
+                                                                                         },
+                                                                               "expiresAt":  {
+                                                                                                 "type":  "string",
+                                                                                                 "description":  "Expiration timestamp of the access token in UTC.",
+                                                                                                 "format":  "date-time"
+                                                                                             },
+                                                                               "user":  {
+                                                                                            "$ref":  "#/components/schemas/UserResponse"
+                                                                                        }
+                                                                           },
+                                                            "additionalProperties":  false,
+                                                            "description":  "Response returned upon successful user authentication or registration."
+                                                        },
+                                       "LoginRequest":  {
+                                                            "type":  "object",
+                                                            "properties":  {
+                                                                               "email":  {
+                                                                                             "type":  "string",
+                                                                                             "description":  "User\u0027s registered email address.",
+                                                                                             "nullable":  true
+                                                                                         },
+                                                                               "password":  {
+                                                                                                "type":  "string",
+                                                                                                "description":  "User\u0027s password in plain text.",
+                                                                                                "nullable":  true
+                                                                                            }
+                                                                           },
+                                                            "additionalProperties":  false,
+                                                            "description":  "Request payload for authenticating a user."
+                                                        },
+                                       "ProblemDetails":  {
+                                                              "type":  "object",
+                                                              "properties":  {
+                                                                                 "type":  {
+                                                                                              "type":  "string",
+                                                                                              "nullable":  true
+                                                                                          },
+                                                                                 "title":  {
+                                                                                               "type":  "string",
+                                                                                               "nullable":  true
+                                                                                           },
+                                                                                 "status":  {
+                                                                                                "type":  "integer",
+                                                                                                "format":  "int32",
+                                                                                                "nullable":  true
+                                                                                            },
+                                                                                 "detail":  {
+                                                                                                "type":  "string",
+                                                                                                "nullable":  true
+                                                                                            },
+                                                                                 "instance":  {
+                                                                                                  "type":  "string",
+                                                                                                  "nullable":  true
+                                                                                              }
+                                                                             },
+                                                              "additionalProperties":  {
+
+                                                                                       }
+                                                          },
+                                       "RegisterRequest":  {
+                                                               "type":  "object",
+                                                               "properties":  {
+                                                                                  "firstName":  {
+                                                                                                    "type":  "string",
+                                                                                                    "description":  "User\u0027s first name.",
+                                                                                                    "nullable":  true
+                                                                                                },
+                                                                                  "lastName":  {
+                                                                                                   "type":  "string",
+                                                                                                   "description":  "User\u0027s last name.",
+                                                                                                   "nullable":  true
+                                                                                               },
+                                                                                  "email":  {
+                                                                                                "type":  "string",
+                                                                                                "description":  "User\u0027s email address (used as unique login credential).",
+                                                                                                "nullable":  true
+                                                                                            },
+                                                                                  "password":  {
+                                                                                                   "type":  "string",
+                                                                                                   "description":  "Chosen account password.",
+                                                                                                   "nullable":  true
+                                                                                               }
+                                                                              },
+                                                               "additionalProperties":  false,
+                                                               "description":  "Request payload for registering a new user account."
+                                                           },
+                                       "UpdateUserProfileDto":  {
+                                                                    "required":  [
+                                                                                     "firstName",
+                                                                                     "lastName"
+                                                                                 ],
+                                                                    "type":  "object",
+                                                                    "properties":  {
+                                                                                       "firstName":  {
+                                                                                                         "maxLength":  100,
+                                                                                                         "minLength":  1,
+                                                                                                         "type":  "string",
+                                                                                                         "description":  "Updated first name."
+                                                                                                     },
+                                                                                       "lastName":  {
+                                                                                                        "maxLength":  100,
+                                                                                                        "minLength":  1,
+                                                                                                        "type":  "string",
+                                                                                                        "description":  "Updated last name."
+                                                                                                    },
+                                                                                       "phoneNumber":  {
+                                                                                                           "maxLength":  20,
+                                                                                                           "type":  "string",
+                                                                                                           "description":  "Updated contact phone number.",
+                                                                                                           "nullable":  true
+                                                                                                       }
+                                                                                   },
+                                                                    "additionalProperties":  false,
+                                                                    "description":  "Request payload for updating the current user\u0027s profile details."
+                                                                },
+                                       "UserProfileDto":  {
+                                                              "type":  "object",
+                                                              "properties":  {
+                                                                                 "id":  {
+                                                                                            "type":  "string",
+                                                                                            "description":  "Unique user identifier.",
+                                                                                            "format":  "uuid"
+                                                                                        },
+                                                                                 "firstName":  {
+                                                                                                   "type":  "string",
+                                                                                                   "description":  "User\u0027s first name.",
+                                                                                                   "nullable":  true
+                                                                                               },
+                                                                                 "lastName":  {
+                                                                                                  "type":  "string",
+                                                                                                  "description":  "User\u0027s last name.",
+                                                                                                  "nullable":  true
+                                                                                              },
+                                                                                 "email":  {
+                                                                                               "type":  "string",
+                                                                                               "description":  "User\u0027s registered email address.",
+                                                                                               "nullable":  true
+                                                                                           },
+                                                                                 "phoneNumber":  {
+                                                                                                     "type":  "string",
+                                                                                                     "description":  "Contact phone number, if provided.",
+                                                                                                     "nullable":  true
+                                                                                                 },
+                                                                                 "profileImageUrl":  {
+                                                                                                         "type":  "string",
+                                                                                                         "description":  "Public URL or relative path to the profile avatar image.",
+                                                                                                         "nullable":  true
+                                                                                                     },
+                                                                                 "roleId":  {
+                                                                                                "type":  "string",
+                                                                                                "description":  "Assigned role identifier.",
+                                                                                                "format":  "uuid"
+                                                                                            },
+                                                                                 "roleName":  {
+                                                                                                  "type":  "string",
+                                                                                                  "description":  "Assigned role name (e.g., Customer, Admin).",
+                                                                                                  "nullable":  true
+                                                                                              },
+                                                                                 "createdAt":  {
+                                                                                                   "type":  "string",
+                                                                                                   "description":  "Account creation timestamp in UTC.",
+                                                                                                   "format":  "date-time"
+                                                                                               }
+                                                                             },
+                                                              "additionalProperties":  false,
+                                                              "description":  "User profile details returned for authenticated profile queries."
+                                                          },
+                                       "UserResponse":  {
+                                                            "type":  "object",
+                                                            "properties":  {
+                                                                               "id":  {
+                                                                                          "type":  "string",
+                                                                                          "description":  "Unique user identifier.",
+                                                                                          "format":  "uuid"
+                                                                                      },
+                                                                               "firstName":  {
+                                                                                                 "type":  "string",
+                                                                                                 "description":  "User\u0027s first name.",
+                                                                                                 "nullable":  true
+                                                                                             },
+                                                                               "lastName":  {
+                                                                                                "type":  "string",
+                                                                                                "description":  "User\u0027s last name.",
+                                                                                                "nullable":  true
+                                                                                            },
+                                                                               "email":  {
+                                                                                             "type":  "string",
+                                                                                             "description":  "User\u0027s email address.",
+                                                                                             "nullable":  true
+                                                                                         },
+                                                                               "roleId":  {
+                                                                                              "type":  "string",
+                                                                                              "description":  "Assigned role identifier.",
+                                                                                              "format":  "uuid"
+                                                                                          }
+                                                                           },
+                                                            "additionalProperties":  false,
+                                                            "description":  "User identity summary returned in authentication responses."
+                                                        },
+                                       "WeatherForecast":  {
+                                                               "type":  "object",
+                                                               "properties":  {
+                                                                                  "date":  {
+                                                                                               "type":  "string",
+                                                                                               "format":  "date"
+                                                                                           },
+                                                                                  "temperatureC":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "format":  "int32"
+                                                                                                   },
+                                                                                  "temperatureF":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "format":  "int32",
+                                                                                                       "readOnly":  true
+                                                                                                   },
+                                                                                  "summary":  {
+                                                                                                  "type":  "string",
+                                                                                                  "nullable":  true
+                                                                                              }
+                                                                              },
+                                                               "additionalProperties":  false
+                                                           }
+                                   },
+                       "securitySchemes":  {
+                                               "Bearer":  {
+                                                              "type":  "http",
+                                                              "description":  "JWT Authorization header using the Bearer scheme. Enter your JWT token directly.",
+                                                              "scheme":  "bearer",
+                                                              "bearerFormat":  "JWT"
+                                                          }
+                                           }
+                   }
+}

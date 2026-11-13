@@ -1,0 +1,8 @@
+{
+    "PaymentService":  28188,
+    "OrderService":  26024,
+    "ApiGateway":  23364,
+    "UserService":  7292,
+    "Frontend":  18280,
+    "ProductService":  20432
+}

@@ -17,29 +17,49 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "User Service API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "UserService API",
+        Version = "v1",
+        Description = "User Service API for authentication, user profiles, and image management in the ECommerce system."
+    });
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
         Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
+        Description = "JWT Authorization header using the Bearer scheme. Enter your JWT token directly."
     });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+
+    c.CustomOperationIds(apiDesc =>
     {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
+        var controller = apiDesc.ActionDescriptor.RouteValues.TryGetValue("controller", out var cVal) && !string.IsNullOrEmpty(cVal)
+            ? cVal
+            : "Api";
+        var action = apiDesc.ActionDescriptor.RouteValues.TryGetValue("action", out var aVal) && !string.IsNullOrEmpty(aVal)
+            ? aVal
+            : apiDesc.HttpMethod ?? "Action";
+        return $"{controller}_{action}";
     });
+
+    c.OperationFilter<UserService.API.Swagger.AuthorizeCheckOperationFilter>();
+
+    var apiXml = $"{typeof(Program).Assembly.GetName().Name}.xml";
+    var apiXmlPath = Path.Combine(AppContext.BaseDirectory, apiXml);
+    if (File.Exists(apiXmlPath))
+    {
+        c.IncludeXmlComments(apiXmlPath);
+    }
+
+    var appXml = $"{typeof(UserService.Application.DTOs.Auth.LoginRequest).Assembly.GetName().Name}.xml";
+    var appXmlPath = Path.Combine(AppContext.BaseDirectory, appXml);
+    if (File.Exists(appXmlPath))
+    {
+        c.IncludeXmlComments(appXmlPath);
+    }
 });
 
 builder.Services.AddApplicationServices();

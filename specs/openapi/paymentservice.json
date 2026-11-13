@@ -1,0 +1,785 @@
+﻿{
+    "openapi":  "3.0.4",
+    "info":  {
+                 "title":  "PaymentService API",
+                 "description":  "Payment Service API for payment processing, verification, and refunds in the ECommerce system.",
+                 "version":  "v1"
+             },
+    "paths":  {
+                  "/api/internal/payments/{orderId}/refund-initiate":  {
+                                                                           "post":  {
+                                                                                        "tags":  [
+                                                                                                     "PaymentInternal"
+                                                                                                 ],
+                                                                                        "summary":  "Initiates a compensating refund for an order (e.g., triggered when an order is cancelled or expires). Internal endpoint.",
+                                                                                        "operationId":  "PaymentInternal_InitiateRefund",
+                                                                                        "parameters":  [
+                                                                                                           {
+                                                                                                               "name":  "orderId",
+                                                                                                               "in":  "path",
+                                                                                                               "description":  "Order identifier whose payment should be refunded.",
+                                                                                                               "required":  true,
+                                                                                                               "schema":  {
+                                                                                                                              "type":  "string",
+                                                                                                                              "format":  "uuid"
+                                                                                                                          }
+                                                                                                           },
+                                                                                                           {
+                                                                                                               "name":  "X-Internal-Service-Key",
+                                                                                                               "in":  "header",
+                                                                                                               "description":  "Secret key required for authenticating internal inter-service requests.",
+                                                                                                               "required":  true,
+                                                                                                               "schema":  {
+                                                                                                                              "type":  "string"
+                                                                                                                          }
+                                                                                                           }
+                                                                                                       ],
+                                                                                        "responses":  {
+                                                                                                          "200":  {
+                                                                                                                      "description":  "Refund initiated successfully.",
+                                                                                                                      "content":  {
+                                                                                                                                      "text/plain":  {
+                                                                                                                                                         "schema":  {
+                                                                                                                                                                        "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                                    }
+                                                                                                                                                     },
+                                                                                                                                      "application/json":  {
+                                                                                                                                                               "schema":  {
+                                                                                                                                                                              "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                                          }
+                                                                                                                                                           },
+                                                                                                                                      "text/json":  {
+                                                                                                                                                        "schema":  {
+                                                                                                                                                                       "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                                   }
+                                                                                                                                                    }
+                                                                                                                                  }
+                                                                                                                  },
+                                                                                                          "400":  {
+                                                                                                                      "description":  "Order cannot be refunded or operation error.",
+                                                                                                                      "content":  {
+                                                                                                                                      "text/plain":  {
+                                                                                                                                                         "schema":  {
+
+                                                                                                                                                                    }
+                                                                                                                                                     },
+                                                                                                                                      "application/json":  {
+                                                                                                                                                               "schema":  {
+
+                                                                                                                                                                          }
+                                                                                                                                                           },
+                                                                                                                                      "text/json":  {
+                                                                                                                                                        "schema":  {
+
+                                                                                                                                                                   }
+                                                                                                                                                    }
+                                                                                                                                  }
+                                                                                                                  },
+                                                                                                          "401":  {
+                                                                                                                      "description":  "Missing or invalid X-Internal-Service-Key.",
+                                                                                                                      "content":  {
+                                                                                                                                      "text/plain":  {
+                                                                                                                                                         "schema":  {
+                                                                                                                                                                        "type":  "string"
+                                                                                                                                                                    }
+                                                                                                                                                     },
+                                                                                                                                      "application/json":  {
+                                                                                                                                                               "schema":  {
+                                                                                                                                                                              "type":  "string"
+                                                                                                                                                                          }
+                                                                                                                                                           },
+                                                                                                                                      "text/json":  {
+                                                                                                                                                        "schema":  {
+                                                                                                                                                                       "type":  "string"
+                                                                                                                                                                   }
+                                                                                                                                                    }
+                                                                                                                                  }
+                                                                                                                  }
+                                                                                                      }
+                                                                                    }
+                                                                       },
+                  "/api/internal/payments/order/{orderId}":  {
+                                                                 "get":  {
+                                                                             "tags":  [
+                                                                                          "PaymentInternal"
+                                                                                      ],
+                                                                             "summary":  "Retrieves internal payment details by order identifier for inter-service validation. Internal endpoint.",
+                                                                             "operationId":  "PaymentInternal_GetPaymentByOrderId",
+                                                                             "parameters":  [
+                                                                                                {
+                                                                                                    "name":  "orderId",
+                                                                                                    "in":  "path",
+                                                                                                    "description":  "Order identifier.",
+                                                                                                    "required":  true,
+                                                                                                    "schema":  {
+                                                                                                                   "type":  "string",
+                                                                                                                   "format":  "uuid"
+                                                                                                               }
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "X-Internal-Service-Key",
+                                                                                                    "in":  "header",
+                                                                                                    "description":  "Secret key required for authenticating internal inter-service requests.",
+                                                                                                    "required":  true,
+                                                                                                    "schema":  {
+                                                                                                                   "type":  "string"
+                                                                                                               }
+                                                                                                }
+                                                                                            ],
+                                                                             "responses":  {
+                                                                                               "200":  {
+                                                                                                           "description":  "Payment found and returned.",
+                                                                                                           "content":  {
+                                                                                                                           "text/plain":  {
+                                                                                                                                              "schema":  {
+                                                                                                                                                             "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                         }
+                                                                                                                                          },
+                                                                                                                           "application/json":  {
+                                                                                                                                                    "schema":  {
+                                                                                                                                                                   "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                               }
+                                                                                                                                                },
+                                                                                                                           "text/json":  {
+                                                                                                                                             "schema":  {
+                                                                                                                                                            "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                        }
+                                                                                                                                         }
+                                                                                                                       }
+                                                                                                       },
+                                                                                               "404":  {
+                                                                                                           "description":  "Payment record not found for the given order ID.",
+                                                                                                           "content":  {
+                                                                                                                           "text/plain":  {
+                                                                                                                                              "schema":  {
+                                                                                                                                                             "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                         }
+                                                                                                                                          },
+                                                                                                                           "application/json":  {
+                                                                                                                                                    "schema":  {
+                                                                                                                                                                   "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                               }
+                                                                                                                                                },
+                                                                                                                           "text/json":  {
+                                                                                                                                             "schema":  {
+                                                                                                                                                            "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                        }
+                                                                                                                                         }
+                                                                                                                       }
+                                                                                                       },
+                                                                                               "400":  {
+                                                                                                           "description":  "Query error.",
+                                                                                                           "content":  {
+                                                                                                                           "text/plain":  {
+                                                                                                                                              "schema":  {
+
+                                                                                                                                                         }
+                                                                                                                                          },
+                                                                                                                           "application/json":  {
+                                                                                                                                                    "schema":  {
+
+                                                                                                                                                               }
+                                                                                                                                                },
+                                                                                                                           "text/json":  {
+                                                                                                                                             "schema":  {
+
+                                                                                                                                                        }
+                                                                                                                                         }
+                                                                                                                       }
+                                                                                                       },
+                                                                                               "401":  {
+                                                                                                           "description":  "Missing or invalid X-Internal-Service-Key.",
+                                                                                                           "content":  {
+                                                                                                                           "text/plain":  {
+                                                                                                                                              "schema":  {
+                                                                                                                                                             "type":  "string"
+                                                                                                                                                         }
+                                                                                                                                          },
+                                                                                                                           "application/json":  {
+                                                                                                                                                    "schema":  {
+                                                                                                                                                                   "type":  "string"
+                                                                                                                                                               }
+                                                                                                                                                },
+                                                                                                                           "text/json":  {
+                                                                                                                                             "schema":  {
+                                                                                                                                                            "type":  "string"
+                                                                                                                                                        }
+                                                                                                                                         }
+                                                                                                                       }
+                                                                                                       }
+                                                                                           }
+                                                                         }
+                                                             },
+                  "/api/Payments":  {
+                                        "post":  {
+                                                     "tags":  [
+                                                                  "Payments"
+                                                              ],
+                                                     "summary":  "Creates a payment transaction for an order with idempotency guarantee.",
+                                                     "operationId":  "Payments_CreatePayment",
+                                                     "parameters":  [
+                                                                        {
+                                                                            "name":  "Idempotency-Key",
+                                                                            "in":  "header",
+                                                                            "description":  "Unique idempotency key header to prevent duplicate charges.",
+                                                                            "required":  true,
+                                                                            "schema":  {
+                                                                                           "type":  "string"
+                                                                                       }
+                                                                        }
+                                                                    ],
+                                                     "requestBody":  {
+                                                                         "description":  "Payment parameters including order identifier, amount, and payment method.",
+                                                                         "content":  {
+                                                                                         "application/json":  {
+                                                                                                                  "schema":  {
+                                                                                                                                 "$ref":  "#/components/schemas/CreatePaymentDto"
+                                                                                                                             }
+                                                                                                              },
+                                                                                         "text/json":  {
+                                                                                                           "schema":  {
+                                                                                                                          "$ref":  "#/components/schemas/CreatePaymentDto"
+                                                                                                                      }
+                                                                                                       },
+                                                                                         "application/*+json":  {
+                                                                                                                    "schema":  {
+                                                                                                                                   "$ref":  "#/components/schemas/CreatePaymentDto"
+                                                                                                                               }
+                                                                                                                }
+                                                                                     }
+                                                                     },
+                                                     "responses":  {
+                                                                       "201":  {
+                                                                                   "description":  "Payment record created successfully.",
+                                                                                   "content":  {
+                                                                                                   "text/plain":  {
+                                                                                                                      "schema":  {
+                                                                                                                                     "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                 }
+                                                                                                                  },
+                                                                                                   "application/json":  {
+                                                                                                                            "schema":  {
+                                                                                                                                           "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                       }
+                                                                                                                        },
+                                                                                                   "text/json":  {
+                                                                                                                     "schema":  {
+                                                                                                                                    "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                }
+                                                                                                                 }
+                                                                                               }
+                                                                               },
+                                                                       "400":  {
+                                                                                   "description":  "Missing Idempotency-Key header or invalid request data.",
+                                                                                   "content":  {
+                                                                                                   "text/plain":  {
+                                                                                                                      "schema":  {
+
+                                                                                                                                 }
+                                                                                                                  },
+                                                                                                   "application/json":  {
+                                                                                                                            "schema":  {
+
+                                                                                                                                       }
+                                                                                                                        },
+                                                                                                   "text/json":  {
+                                                                                                                     "schema":  {
+
+                                                                                                                                }
+                                                                                                                 }
+                                                                                               }
+                                                                               },
+                                                                       "401":  {
+                                                                                   "description":  "Missing or invalid authentication token.",
+                                                                                   "content":  {
+                                                                                                   "text/plain":  {
+                                                                                                                      "schema":  {
+                                                                                                                                     "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                 }
+                                                                                                                  },
+                                                                                                   "application/json":  {
+                                                                                                                            "schema":  {
+                                                                                                                                           "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                       }
+                                                                                                                        },
+                                                                                                   "text/json":  {
+                                                                                                                     "schema":  {
+                                                                                                                                    "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                }
+                                                                                                                 }
+                                                                                               }
+                                                                               },
+                                                                       "409":  {
+                                                                                   "description":  "Conflicting concurrent payment request detected for key.",
+                                                                                   "content":  {
+                                                                                                   "text/plain":  {
+                                                                                                                      "schema":  {
+
+                                                                                                                                 }
+                                                                                                                  },
+                                                                                                   "application/json":  {
+                                                                                                                            "schema":  {
+
+                                                                                                                                       }
+                                                                                                                        },
+                                                                                                   "text/json":  {
+                                                                                                                     "schema":  {
+
+                                                                                                                                }
+                                                                                                                 }
+                                                                                               }
+                                                                               }
+                                                                   },
+                                                     "security":  [
+                                                                      {
+                                                                          "Bearer":  [
+
+                                                                                     ]
+                                                                      }
+                                                                  ]
+                                                 }
+                                    },
+                  "/api/Payments/{id}/process":  {
+                                                     "post":  {
+                                                                  "tags":  [
+                                                                               "Payments"
+                                                                           ],
+                                                                  "summary":  "Processes payment charge through the payment gateway for a created payment.",
+                                                                  "operationId":  "Payments_ProcessPayment",
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "id",
+                                                                                         "in":  "path",
+                                                                                         "description":  "Payment transaction identifier.",
+                                                                                         "required":  true,
+                                                                                         "schema":  {
+                                                                                                        "type":  "string",
+                                                                                                        "format":  "uuid"
+                                                                                                    }
+                                                                                     }
+                                                                                 ],
+                                                                  "responses":  {
+                                                                                    "200":  {
+                                                                                                "description":  "Payment processed successfully.",
+                                                                                                "content":  {
+                                                                                                                "text/plain":  {
+                                                                                                                                   "schema":  {
+                                                                                                                                                  "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                              }
+                                                                                                                               },
+                                                                                                                "application/json":  {
+                                                                                                                                         "schema":  {
+                                                                                                                                                        "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                    }
+                                                                                                                                     },
+                                                                                                                "text/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                            }
+                                                                                            },
+                                                                                    "400":  {
+                                                                                                "description":  "Payment failed or cannot be processed.",
+                                                                                                "content":  {
+                                                                                                                "text/plain":  {
+                                                                                                                                   "schema":  {
+
+                                                                                                                                              }
+                                                                                                                               },
+                                                                                                                "application/json":  {
+                                                                                                                                         "schema":  {
+
+                                                                                                                                                    }
+                                                                                                                                     },
+                                                                                                                "text/json":  {
+                                                                                                                                  "schema":  {
+
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                            }
+                                                                                            },
+                                                                                    "401":  {
+                                                                                                "description":  "Missing or invalid authentication token.",
+                                                                                                "content":  {
+                                                                                                                "text/plain":  {
+                                                                                                                                   "schema":  {
+                                                                                                                                                  "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                              }
+                                                                                                                               },
+                                                                                                                "application/json":  {
+                                                                                                                                         "schema":  {
+                                                                                                                                                        "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                    }
+                                                                                                                                     },
+                                                                                                                "text/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                            }
+                                                                                            }
+                                                                                },
+                                                                  "security":  [
+                                                                                   {
+                                                                                       "Bearer":  [
+
+                                                                                                  ]
+                                                                                   }
+                                                                               ]
+                                                              }
+                                                 },
+                  "/api/Payments/order/{orderId}":  {
+                                                        "get":  {
+                                                                    "tags":  [
+                                                                                 "Payments"
+                                                                             ],
+                                                                    "summary":  "Retrieves the payment record associated with a specific order.",
+                                                                    "operationId":  "Payments_GetOrderPayment",
+                                                                    "parameters":  [
+                                                                                       {
+                                                                                           "name":  "orderId",
+                                                                                           "in":  "path",
+                                                                                           "description":  "Order identifier.",
+                                                                                           "required":  true,
+                                                                                           "schema":  {
+                                                                                                          "type":  "string",
+                                                                                                          "format":  "uuid"
+                                                                                                      }
+                                                                                       }
+                                                                                   ],
+                                                                    "responses":  {
+                                                                                      "200":  {
+                                                                                                  "description":  "Payment found and returned.",
+                                                                                                  "content":  {
+                                                                                                                  "text/plain":  {
+                                                                                                                                     "schema":  {
+                                                                                                                                                    "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                }
+                                                                                                                                 },
+                                                                                                                  "application/json":  {
+                                                                                                                                           "schema":  {
+                                                                                                                                                          "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                      }
+                                                                                                                                       },
+                                                                                                                  "text/json":  {
+                                                                                                                                    "schema":  {
+                                                                                                                                                   "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                               }
+                                                                                                                                }
+                                                                                                              }
+                                                                                              },
+                                                                                      "204":  {
+                                                                                                  "description":  "No payment record found for this order."
+                                                                                              },
+                                                                                      "400":  {
+                                                                                                  "description":  "Error retrieving payment.",
+                                                                                                  "content":  {
+                                                                                                                  "text/plain":  {
+                                                                                                                                     "schema":  {
+
+                                                                                                                                                }
+                                                                                                                                 },
+                                                                                                                  "application/json":  {
+                                                                                                                                           "schema":  {
+
+                                                                                                                                                      }
+                                                                                                                                       },
+                                                                                                                  "text/json":  {
+                                                                                                                                    "schema":  {
+
+                                                                                                                                               }
+                                                                                                                                }
+                                                                                                              }
+                                                                                              },
+                                                                                      "401":  {
+                                                                                                  "description":  "Missing or invalid authentication token.",
+                                                                                                  "content":  {
+                                                                                                                  "text/plain":  {
+                                                                                                                                     "schema":  {
+                                                                                                                                                    "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                }
+                                                                                                                                 },
+                                                                                                                  "application/json":  {
+                                                                                                                                           "schema":  {
+                                                                                                                                                          "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                      }
+                                                                                                                                       },
+                                                                                                                  "text/json":  {
+                                                                                                                                    "schema":  {
+                                                                                                                                                   "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                               }
+                                                                                                                                }
+                                                                                                              }
+                                                                                              }
+                                                                                  },
+                                                                    "security":  [
+                                                                                     {
+                                                                                         "Bearer":  [
+
+                                                                                                    ]
+                                                                                     }
+                                                                                 ]
+                                                                }
+                                                    },
+                  "/api/Payments/{id}/refund-complete":  {
+                                                             "post":  {
+                                                                          "tags":  [
+                                                                                       "Payments"
+                                                                                   ],
+                                                                          "summary":  "Completes a refund transaction for a payment. Requires Admin role.",
+                                                                          "operationId":  "Payments_CompleteRefund",
+                                                                          "parameters":  [
+                                                                                             {
+                                                                                                 "name":  "id",
+                                                                                                 "in":  "path",
+                                                                                                 "description":  "Payment identifier to refund.",
+                                                                                                 "required":  true,
+                                                                                                 "schema":  {
+                                                                                                                "type":  "string",
+                                                                                                                "format":  "uuid"
+                                                                                                            }
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "Idempotency-Key",
+                                                                                                 "in":  "header",
+                                                                                                 "description":  "Unique idempotency key header to prevent duplicate refund processing.",
+                                                                                                 "required":  true,
+                                                                                                 "schema":  {
+                                                                                                                "type":  "string"
+                                                                                                            }
+                                                                                             }
+                                                                                         ],
+                                                                          "responses":  {
+                                                                                            "200":  {
+                                                                                                        "description":  "Refund completed successfully.",
+                                                                                                        "content":  {
+                                                                                                                        "text/plain":  {
+                                                                                                                                           "schema":  {
+                                                                                                                                                          "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                      }
+                                                                                                                                       },
+                                                                                                                        "application/json":  {
+                                                                                                                                                 "schema":  {
+                                                                                                                                                                "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                            }
+                                                                                                                                             },
+                                                                                                                        "text/json":  {
+                                                                                                                                          "schema":  {
+                                                                                                                                                         "$ref":  "#/components/schemas/PaymentDto"
+                                                                                                                                                     }
+                                                                                                                                      }
+                                                                                                                    }
+                                                                                                    },
+                                                                                            "400":  {
+                                                                                                        "description":  "Missing Idempotency-Key header or invalid refund state.",
+                                                                                                        "content":  {
+                                                                                                                        "text/plain":  {
+                                                                                                                                           "schema":  {
+
+                                                                                                                                                      }
+                                                                                                                                       },
+                                                                                                                        "application/json":  {
+                                                                                                                                                 "schema":  {
+
+                                                                                                                                                            }
+                                                                                                                                             },
+                                                                                                                        "text/json":  {
+                                                                                                                                          "schema":  {
+
+                                                                                                                                                     }
+                                                                                                                                      }
+                                                                                                                    }
+                                                                                                    },
+                                                                                            "401":  {
+                                                                                                        "description":  "Missing or invalid authentication token.",
+                                                                                                        "content":  {
+                                                                                                                        "text/plain":  {
+                                                                                                                                           "schema":  {
+                                                                                                                                                          "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                      }
+                                                                                                                                       },
+                                                                                                                        "application/json":  {
+                                                                                                                                                 "schema":  {
+                                                                                                                                                                "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                            }
+                                                                                                                                             },
+                                                                                                                        "text/json":  {
+                                                                                                                                          "schema":  {
+                                                                                                                                                         "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                     }
+                                                                                                                                      }
+                                                                                                                    }
+                                                                                                    },
+                                                                                            "403":  {
+                                                                                                        "description":  "User does not possess Admin role.",
+                                                                                                        "content":  {
+                                                                                                                        "text/plain":  {
+                                                                                                                                           "schema":  {
+                                                                                                                                                          "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                      }
+                                                                                                                                       },
+                                                                                                                        "application/json":  {
+                                                                                                                                                 "schema":  {
+                                                                                                                                                                "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                            }
+                                                                                                                                             },
+                                                                                                                        "text/json":  {
+                                                                                                                                          "schema":  {
+                                                                                                                                                         "$ref":  "#/components/schemas/ProblemDetails"
+                                                                                                                                                     }
+                                                                                                                                      }
+                                                                                                                    }
+                                                                                                    },
+                                                                                            "409":  {
+                                                                                                        "description":  "Conflicting concurrent refund request detected.",
+                                                                                                        "content":  {
+                                                                                                                        "text/plain":  {
+                                                                                                                                           "schema":  {
+
+                                                                                                                                                      }
+                                                                                                                                       },
+                                                                                                                        "application/json":  {
+                                                                                                                                                 "schema":  {
+
+                                                                                                                                                            }
+                                                                                                                                             },
+                                                                                                                        "text/json":  {
+                                                                                                                                          "schema":  {
+
+                                                                                                                                                     }
+                                                                                                                                      }
+                                                                                                                    }
+                                                                                                    }
+                                                                                        },
+                                                                          "security":  [
+                                                                                           {
+                                                                                               "Bearer":  [
+
+                                                                                                          ]
+                                                                                           }
+                                                                                       ]
+                                                                      }
+                                                         }
+              },
+    "components":  {
+                       "schemas":  {
+                                       "CreatePaymentDto":  {
+                                                                "required":  [
+                                                                                 "amount",
+                                                                                 "method",
+                                                                                 "orderId"
+                                                                             ],
+                                                                "type":  "object",
+                                                                "properties":  {
+                                                                                   "orderId":  {
+                                                                                                   "type":  "string",
+                                                                                                   "description":  "Associated order identifier to pay.",
+                                                                                                   "format":  "uuid"
+                                                                                               },
+                                                                                   "amount":  {
+                                                                                                  "maximum":  1000000,
+                                                                                                  "minimum":  0.01,
+                                                                                                  "type":  "number",
+                                                                                                  "description":  "Monetary amount to be charged.",
+                                                                                                  "format":  "double"
+                                                                                              },
+                                                                                   "method":  {
+                                                                                                  "type":  "integer",
+                                                                                                  "description":  "Payment method code (0: CreditCard, 1: DebitCard, 2: PayPal).",
+                                                                                                  "format":  "int32"
+                                                                                              }
+                                                                               },
+                                                                "additionalProperties":  false,
+                                                                "description":  "Request payload for creating a new payment against an existing order."
+                                                            },
+                                       "PaymentDto":  {
+                                                          "type":  "object",
+                                                          "properties":  {
+                                                                             "id":  {
+                                                                                        "type":  "string",
+                                                                                        "description":  "Unique payment identifier.",
+                                                                                        "format":  "uuid"
+                                                                                    },
+                                                                             "orderId":  {
+                                                                                             "type":  "string",
+                                                                                             "description":  "Associated order identifier.",
+                                                                                             "format":  "uuid"
+                                                                                         },
+                                                                             "amount":  {
+                                                                                            "type":  "number",
+                                                                                            "description":  "Monetary payment amount.",
+                                                                                            "format":  "double"
+                                                                                        },
+                                                                             "status":  {
+                                                                                            "type":  "integer",
+                                                                                            "description":  "Payment transaction status (0: Pending, 1: Success, 2: Failed, 3: RefundInProcess, 4: Refunded).",
+                                                                                            "format":  "int32"
+                                                                                        },
+                                                                             "method":  {
+                                                                                            "type":  "integer",
+                                                                                            "description":  "Payment method (0: CreditCard, 1: DebitCard, 2: PayPal, etc.).",
+                                                                                            "format":  "int32"
+                                                                                        },
+                                                                             "transactionId":  {
+                                                                                                   "type":  "string",
+                                                                                                   "description":  "External gateway transaction reference code.",
+                                                                                                   "nullable":  true
+                                                                                               },
+                                                                             "processedAt":  {
+                                                                                                 "type":  "string",
+                                                                                                 "description":  "Timestamp when the payment was processed in UTC.",
+                                                                                                 "format":  "date-time"
+                                                                                             }
+                                                                         },
+                                                          "additionalProperties":  false,
+                                                          "description":  "Details of a payment transaction or refund."
+                                                      },
+                                       "ProblemDetails":  {
+                                                              "type":  "object",
+                                                              "properties":  {
+                                                                                 "type":  {
+                                                                                              "type":  "string",
+                                                                                              "nullable":  true
+                                                                                          },
+                                                                                 "title":  {
+                                                                                               "type":  "string",
+                                                                                               "nullable":  true
+                                                                                           },
+                                                                                 "status":  {
+                                                                                                "type":  "integer",
+                                                                                                "format":  "int32",
+                                                                                                "nullable":  true
+                                                                                            },
+                                                                                 "detail":  {
+                                                                                                "type":  "string",
+                                                                                                "nullable":  true
+                                                                                            },
+                                                                                 "instance":  {
+                                                                                                  "type":  "string",
+                                                                                                  "nullable":  true
+                                                                                              }
+                                                                             },
+                                                              "additionalProperties":  {
+
+                                                                                       }
+                                                          }
+                                   },
+                       "securitySchemes":  {
+                                               "Bearer":  {
+                                                              "type":  "http",
+                                                              "description":  "JWT Authorization header using the Bearer scheme. Enter your JWT token directly.",
+                                                              "scheme":  "bearer",
+                                                              "bearerFormat":  "JWT"
+                                                          }
+                                           }
+                   },
+    "tags":  [
+                 {
+                     "name":  "PaymentInternal"
+                 },
+                 {
+                     "name":  "Payments"
+                 }
+             ]
+}

@@ -40,9 +40,9 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "ProductService API",
         Version = "v1",
-        Description = "Product Service API for the ECommerce application."
+        Description = "Product Service API for managing product catalog, categories, inventory, and bulk imports."
     });
-    // Add JWT Bearer support in Swagger
+
     var securityScheme = new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -50,19 +50,40 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Enter 'Bearer' [space] and then your valid token in the text input below.",
-        Reference = new OpenApiReference
-        {
-            Type = ReferenceType.SecurityScheme,
-            Id = "Bearer"
-        }
+        Description = "JWT Authorization header using the Bearer scheme. Enter your JWT token directly."
     };
 
     c.AddSecurityDefinition("Bearer", securityScheme);
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+
+    c.CustomOperationIds(apiDesc =>
     {
-        { securityScheme, new string[] { } }
+        var controller = apiDesc.ActionDescriptor.RouteValues.TryGetValue("controller", out var cVal) && !string.IsNullOrEmpty(cVal)
+            ? cVal
+            : "Api";
+        var action = apiDesc.ActionDescriptor.RouteValues.TryGetValue("action", out var aVal) && !string.IsNullOrEmpty(aVal)
+            ? aVal
+            : apiDesc.HttpMethod ?? "Action";
+        return $"{controller}_{action}";
     });
+
+    c.OperationFilter<ProductService.API.Swagger.AuthorizeCheckOperationFilter>();
+
+    c.OperationFilter<ProductService.API.Swagger.InternalServiceHeaderOperationFilter>();
+    c.OperationFilter<ProductService.API.Swagger.TotalCountHeaderOperationFilter>();
+
+    var apiXml = $"{typeof(Program).Assembly.GetName().Name}.xml";
+    var apiXmlPath = Path.Combine(AppContext.BaseDirectory, apiXml);
+    if (File.Exists(apiXmlPath))
+    {
+        c.IncludeXmlComments(apiXmlPath);
+    }
+
+    var appXml = $"{typeof(ProductService.Application.DTOs.Products.ProductDto).Assembly.GetName().Name}.xml";
+    var appXmlPath = Path.Combine(AppContext.BaseDirectory, appXml);
+    if (File.Exists(appXmlPath))
+    {
+        c.IncludeXmlComments(appXmlPath);
+    }
 });
 
 // Infrastructure and Application services
